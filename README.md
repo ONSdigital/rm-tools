@@ -1,2 +1,5 @@
-# rm-tools
-Tools for working with Response Management.
+# Response Management Tools
+This repository contains tools for working with [Response Management](https://github.com/ONSdigital/response-management-service).
+
+## Copyright
+Copyright (C) 2016 Crown Copyright (Office for National Statistics)
