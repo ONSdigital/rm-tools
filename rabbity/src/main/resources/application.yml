@@ -1,0 +1,24 @@
+info:
+  contactEmail: philip.whiles@ons.gov.uk
+  version: ${project.version}
+  commit: ${buildNumber}
+  branch: ${scmBranch}
+  buildTime: ${timestamp}
+
+logging:
+  level:
+    uk.gov.ons.ctp: INFO
+    org.springframework: ERROR
+
+spring:
+  output:
+    ansi:
+      enabled: never
+  application:
+    name: ONS Rabbity
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    virtual-host: /
+
