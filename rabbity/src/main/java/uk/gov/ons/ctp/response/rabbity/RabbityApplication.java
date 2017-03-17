@@ -47,7 +47,7 @@ public class RabbityApplication {
   JmsTemplate jmsTemplate;
 
   @Bean
-  ConnectionFactory connectionFactory() {
+  RMQConnectionFactory connectionFactory() {
     return new RMQConnectionFactory();
   }
 
@@ -65,16 +65,16 @@ public class RabbityApplication {
         printUsage(parser);
         return;
       }
-
+      connectionFactory().setHost(options.rabbitHost);
       File dir = new File(options.messageDir);
       File[] files = dir.listFiles((d, name) -> name.endsWith(".xml"));
-      int count=0;
+      int count = 0;
       for (File file : files) {
         log.info("Processing file : {}", file.getName());
         try {
           String content = new String(Files.readAllBytes(Paths.get(file.getPath())));
           publishMessage(options.queueName, content);
-          file.renameTo(new File(file.getPath()+".done"));
+          file.renameTo(new File(file.getPath() + ".done"));
           count++;
         } catch (IOException ioe) {
           log.warn("Could not read file '{}'", file.getName());

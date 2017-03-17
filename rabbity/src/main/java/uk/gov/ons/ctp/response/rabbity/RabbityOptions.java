@@ -31,4 +31,12 @@ public class RabbityOptions extends OptionsBase {
     )
     public String messageDir;
 
+  @Option(
+    name = "rabbithost",
+    abbrev = 'r',
+    help = "The hostname:port of the rabbitmq broker to send messages to",
+    category = "startup",
+    defaultValue = ""
+    )
+    public String rabbitHost;
 }

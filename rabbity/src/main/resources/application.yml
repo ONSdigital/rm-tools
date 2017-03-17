@@ -17,7 +17,7 @@ spring:
   application:
     name: ONS Rabbity
   rabbitmq:
-    host: localhost
+    host: unknownhost
     username: guest
     password: guest
     virtual-host: /
