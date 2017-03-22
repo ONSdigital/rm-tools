@@ -34,9 +34,36 @@ public class RabbityOptions extends OptionsBase {
   @Option(
     name = "rabbithost",
     abbrev = 'r',
-    help = "The hostname:port of the rabbitmq broker to send messages to",
+    help = "The hostname for the rabbitmq broker to send messages to",
     category = "startup",
     defaultValue = ""
     )
     public String rabbitHost;
+
+  @Option(
+    name = "port",
+    abbrev = 'p',
+    help = "The port for the rabbitmq broker to send messages to",
+    category = "startup",
+    defaultValue = ""
+    )
+    public String rabbitPort;
+
+  @Option(
+    name = "user",
+    abbrev = 'u',
+    help = "The username for the rabbitmq broker to send messages to",
+    category = "startup",
+    defaultValue = ""
+    )
+    public String rabbitUser;
+
+  @Option(
+    name = "password",
+    abbrev = 'w',
+    help = "The password for the rabbitmq broker to send messages to",
+    category = "startup",
+    defaultValue = ""
+    )
+    public String rabbitPassword;
 }

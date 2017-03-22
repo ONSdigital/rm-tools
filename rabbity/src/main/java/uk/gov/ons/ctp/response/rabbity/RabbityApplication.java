@@ -48,7 +48,8 @@ public class RabbityApplication {
 
   @Bean
   RMQConnectionFactory connectionFactory() {
-    return new RMQConnectionFactory();
+    RMQConnectionFactory factory = new RMQConnectionFactory();
+    return factory;
   }
 
   public static void main(String[] args) {
@@ -66,6 +67,9 @@ public class RabbityApplication {
         return;
       }
       connectionFactory().setHost(options.rabbitHost);
+      connectionFactory().setPort(Integer.parseInt(options.rabbitPort));
+      connectionFactory().setUsername(options.rabbitUser);
+      connectionFactory().setPassword(options.rabbitPassword);
       File dir = new File(options.messageDir);
       File[] files = dir.listFiles((d, name) -> name.endsWith(".xml"));
       int count = 0;
