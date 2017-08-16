@@ -1,4 +1,10 @@
 #!/bin/bash
+
+###
+# Before running run chmod +x svcbuild.sh to make it executable
+# Run for the first time in the directory containing all of your cloned repositories with ./svcbuild.sh
+###
+
 if ! grep -q "export CODE" ~/.bash_profile
 then
   echo "!!WARNING!! This script must be run for the first time from the directoy containing your rm git repositories"
@@ -143,8 +149,8 @@ else
          "CollectionInstrumentApi" "IacSeviceApi" "SampleSeviceApi" "PartySeviceApi" \
          "SurveySeviceApi" "ReportModule")
          paths=("rm-actionsvc-api/" "rm-casesvc-api/" "rm-collectionexercisesvc-api/" \
-         "rm-collectioninstrumentsvc-api/" "rm-iacsvc-api/" "rm-samplesvc-api/" "rm-party-service-api/"\
-         "rm-surveysvc-api/" "rm-reportmodule")
+         "rm-collectioninstrumentsvc-api/" "rm-iacsvc-api/" "rm-samplesvc-api/" "rm-party-service-api/" \
+         "rm-surveysvc-api/" "rm-reportmodule/" )
          ;;
      -svc)
          services=("ActionExporter"  "ActionSevice" "CaseSevice" "CollectionExerciseSevice" \
@@ -160,7 +166,7 @@ else
          "IacSevice" "SampleSevice" "NotifyGatewaySevice" )
          paths=("rm-actionsvc-api/" "rm-casesvc-api/" "rm-collectionexercisesvc-api/" \
          "rm-collectioninstrumentsvc-api/" "rm-iacsvc-api/" "rm-samplesvc-api/" "rm-party-service-api/" \
-         "rm-surveysvc-api/" "rm-reportmodule" \
+         "rm-surveysvc-api/" "rm-reportmodule/" \
          "rm-actionexporter-service/" "rm-action-service/" "rm-case-service/" "rm-collection-exercisesvc-service/" \
          "iac-service/" "rm-sample-service/" )
          ;;
