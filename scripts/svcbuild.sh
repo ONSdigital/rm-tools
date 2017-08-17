@@ -7,7 +7,7 @@
 
 if ! grep -q "export CODE" ~/.bash_profile
 then
-  echo "!!WARNING!! This script must be run for the first time from the directoy containing your rm git repositories"
+  echo "!!WARNING!! This script must be run for the first time from the directory containing your rm git repositories"
   echo "If you have not done this, run './svcbuild --reset' and run it there again."
   echo ""
   echo "Setting code directory"
