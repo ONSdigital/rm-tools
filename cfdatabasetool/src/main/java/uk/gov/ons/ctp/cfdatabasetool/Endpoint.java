@@ -60,10 +60,16 @@ public final class Endpoint {
         }
         output.append(rs.getArray(columns)).append("\n");
       }
+      rs.close();
     } catch (SQLException e) {
       System.out.println(e);
     } finally {
-      if (stmt != null) { stmt.close(); }
+      if (stmt != null) {
+        stmt.close();
+      }
+      if (conn != null) {
+        conn.close();
+      }
     }
     return ResponseEntity.created(URI.create("TODO")).body(output.toString());
   }
