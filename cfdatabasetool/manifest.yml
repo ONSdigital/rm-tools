@@ -1,0 +1,10 @@
+---
+applications:
+- name: cfdatabasetool
+  instances: 1
+  host: cfdatabasetool
+  memory: 512M
+  path: target/cfdatabasetool-0.0.1-SNAPSHOT.jar
+  timeout: 180
+  services:
+    - rm-pg-db
