@@ -98,11 +98,11 @@ public class LatestBuild {
   }
 
   private static void getName(String snapshotUrl, String home, String svc) throws FileNotFoundException{
-
-    String p = home + svc + ".git.sha";
+    String[] fileName = snapshotUrl.split("/");
+    String p = fileName[12].replaceAll(".jar","") + ".git.sha";
     Path path = Paths.get(p);
     try(  PrintWriter out = new PrintWriter(p)  ){
-      out.println(snapshotUrl);
+      out.println(fileName[12]);
     }
   }
 
