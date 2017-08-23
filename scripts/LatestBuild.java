@@ -10,13 +10,21 @@ public class LatestBuild {
   private static final String[] SERVICES = {"actionsvc","actionexportersvc","casesvc","collectionexercisesvc",
   "iacsvc","samplesvc","surveysvc","notifygatewaysvc","sdxgatewaysvc"};
   private static final String SURVEYSVC = "surveysvc";
+  private static final String USAGE = "java LatestBuild [-n] [-g] <Host> <HomeDir> <Service> \n" +
+                                      "-n   get name of latest version\n" +
+                                      "-g   download latest version of service\n";
 
   public static void main(String[] args){
     try {
-      String host = args[0];
-      String home = args[1] + "/";
-      String service = args[2];
+      String optn = args[0];
+      String host = args[1];
+      String home = args[2] + "/";
+      String service = args[3];
       String ext;
+      if (!(optn.equals("-g")) && !(optn.equals("-n"))){
+        System.out.println(USAGE);
+        System.exit(0);
+      }
       if(!Arrays.asList(SERVICES).contains(service)) {
         System.out.println("Error! Service <" + service + "> does not exist!");
         System.exit(0);
@@ -28,10 +36,32 @@ public class LatestBuild {
       String url = "" + host + "/artifactory/api/search/artifact?name=" + service + "*" + ext + "&repos=libs-snapshot-local";
       String snapshotList = getList(url,service,ext,home);
       String snapshotUrl = getSnapshotUrl(snapshotList,service);
-      getSvc(snapshotUrl,service,ext,home);
+      if(optn.equals("-g")){
+        getSvc(snapshotUrl,service,ext,home);
+      } else if(optn.equals("-n")) {
+        getName(snapshotUrl,home,service);
+      }
     } catch(Exception e){
       System.out.println(e);
     }
+  }
+
+  private static String getList(String uri,String svc, String ext,String home) throws IOException{
+    URL url = new URL(uri);
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    connection.setRequestMethod("GET");
+    connection.setRequestProperty("User-Agent", USER_AGENT);
+
+    BufferedReader br = new BufferedReader(
+      new InputStreamReader(connection.getInputStream()));
+
+    StringBuffer response = new StringBuffer();
+    String output;
+    while ((output = br.readLine()) != null) {
+      response.append(output);
+    }
+    br.close();
+    return response.toString();
   }
 
   private static String getSnapshotUrl(String snapshotList, String service){
@@ -67,26 +97,16 @@ public class LatestBuild {
     return url;
   }
 
-  private static String getList(String uri,String svc, String ext,String home) throws IOException{
-    URL url = new URL(uri);
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-    connection.setRequestMethod("GET");
-    connection.setRequestProperty("User-Agent", USER_AGENT);
+  private static void getName(String snapshotUrl, String home, String svc) throws FileNotFoundException{
 
-    BufferedReader br = new BufferedReader(
-      new InputStreamReader(connection.getInputStream()));
-
-    StringBuffer response = new StringBuffer();
-    String output;
-    while ((output = br.readLine()) != null) {
-      response.append(output);
+    String p = home + svc + ".git.sha";
+    Path path = Paths.get(p);
+    try(  PrintWriter out = new PrintWriter(p)  ){
+      out.println(snapshotUrl);
     }
-    br.close();
-    return response.toString();
   }
 
   private static void getSvc(String uri,String svc, String ext,String home) throws IOException{
-    System.out.println(uri);
     URL obj = new URL(uri);
     HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
     connection.setRequestMethod("GET");
@@ -97,7 +117,6 @@ public class LatestBuild {
     BufferedReader br = new BufferedReader(
             new InputStreamReader(connection.getInputStream()));
 
-    StringBuffer response = new StringBuffer();
     String p = home + svc + ext;
     Path path = Paths.get(p);
     Files.copy(connection.getInputStream(), path);
