@@ -1,6 +1,15 @@
 package uk.gov.ons.ctp.cfdatabasetool;
 
-import lombok.extern.slf4j.Slf4j;
+import java.net.URI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,15 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by wardlk on 18/08/2017.
@@ -37,7 +38,7 @@ public final class Endpoint {
 
   @RequestMapping(method = RequestMethod.POST, consumes = "text/plain")
   public ResponseEntity<String> runQuery(final @Valid @RequestBody String sql) throws SQLException {
-
+    System.out.println("Run with: " + sql);
     Properties props = new Properties();
     props.setProperty("user",uname);
     props.setProperty("password",passwd);
@@ -74,4 +75,30 @@ public final class Endpoint {
     return ResponseEntity.created(URI.create("TODO")).body(output.toString());
   }
 
+  @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = "text/plain")
+  public ResponseEntity<String> runUpdate(final @Valid @RequestBody String sql) throws SQLException {
+    System.out.println("Run update with: " + sql);
+    int resultUpdated = 0;
+    Properties props = new Properties();
+    props.setProperty("user",uname);
+    props.setProperty("password",passwd);
+
+    Connection conn = DriverManager.getConnection(url, props);
+    Statement stmt = null;
+
+    try {
+      stmt = conn.createStatement();
+      resultUpdated = stmt.executeUpdate(sql);
+    } catch (SQLException e) {
+      System.out.println(e);
+    } finally {
+      if (stmt != null) {
+        stmt.close();
+      }
+      if (conn != null) {
+        conn.close();
+      }
+    }
+    return ResponseEntity.created(URI.create("TODO")).body(Integer.toString(resultUpdated));
+  }
 }
