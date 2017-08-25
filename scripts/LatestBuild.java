@@ -130,7 +130,7 @@ public class LatestBuild {
 
     String[] pathComponents = snapshotUrl.split("/");
     String svcVersion = pathComponents[SERVICE_NAME_INDEX]
-      .replaceAll(".jar", ".git.sha");
+      .replaceAll(".jar", ".git.sha.");
 
     System.out.println(svcVersion);
   }
