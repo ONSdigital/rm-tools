@@ -33,7 +33,7 @@ public class LatestBuild {
       service = args[3];
       if (args.length == 5 && optn.equals("-g")) {
         String sha = args[4];
-        ext = ".git.sha" + sha;
+        ext = ".git.sha." + sha;
       } else if (args.length == 4 && optn.equals("-n")) {
           if (service.equals(SURVEYSVC)) {
             ext = ".tar";
