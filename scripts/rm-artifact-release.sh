@@ -1,9 +1,12 @@
 # Get release Details
+set -e
+set -o pipefail
 cd $WORKSPACE/
 mkdir totag
 git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git ./totag
 cd totag
 git reset --hard $RM_PROJECT_GIT_SHA
+mvn dependency:tree | awk '/uk.gov.ons.ctp.product.*SNAPSHOT:compile/{err = 1} END {exit err}'
 $MAVEN_HOME/mvn release:prepare
 $MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
@@ -24,7 +27,9 @@ mv *.jar $WORKSPACE/$RELEASE_FILENAME.jar
 cd $WORKSPACE/
 export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
 curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/$RELEASE_FILENAME.jar" -T $RELEASE_FILENAME.jar
+if [ $? -ne 0 ]; then exit 1;  fi
 curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/$RELEASE_FILENAME.pom" -T $RELEASE_FILENAME.pom
+if [ $? -ne 0 ]; then exit 1;  fi
 
 # Tag Release
 cd $WORKSPACE/totag
