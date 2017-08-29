@@ -10,7 +10,7 @@ public class LatestBuild {
   private static final String[] SERVICES = {"actionsvc", "actionexportersvc",
                                       "casesvc", "collectionexercisesvc",
                                       "iacsvc", "samplesvc", "surveysvc",
-                                      "notifygatewaysvc", "sdxgatewaysvc"};
+                                      "notifygatewaysvc", "sdxgatewaysvc", "rm-release-dummy"};
   private static final String USAGE = "USAGE: java LatestBuild [-n] [-g] " +
                                       "<Host> <HomeDir> <Service>\n" +
                                       "-n   get name of latest version\n" +
