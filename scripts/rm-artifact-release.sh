@@ -1,9 +1,9 @@
-# Get Release Details
+# Get release Details
 cd $WORKSPACE/
 mkdir totag
-git clone git@github.com:ONSdigital/rm-release-dummy.git ./totag
+git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git ./totag
 cd totag
-git reset --hard $RM_DUMMY_GIT_SHA
+git reset --hard $RM_PROJECT_GIT_SHA
 $MAVEN_HOME/mvn release:prepare
 $MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
@@ -17,7 +17,7 @@ cd $WORKSPACE/
 git clone https://github.com/ONSdigital/rm-tools.git
 cd $WORKSPACE/rm-tools/scripts
 javac LatestBuild.java
-java LatestBuild -g http://artifactory.rmdev.onsdigital.uk . samplesvc $RM_SAMPLESERVICE_GIT_SHA
+java LatestBuild -g http://artifactory.rmdev.onsdigital.uk . $ARTIFACT_ID $RM_PROJECT_GIT_SHA
 mv *.jar $WORKSPACE/$RELEASE_FILENAME.jar
 
 # Deploy Release to artifactory
@@ -34,10 +34,10 @@ git push --tags
 # Update Snapshot Version no on master
 cd $WORKSPACE
 mkdir master
-git clone git@github.com:ONSdigital/rm-release-dummy.git ./master
+git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git ./master
 cd master
 $MAVEN_HOME/mvn versions:set -DnextSnapshot=true
 SNAPSHOT_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
 git commit pom.xml -m "Update Snapshot version to $SNAPSHOT_VERSION after Release $RELEASE_VERSION"
 git push
-	
+
