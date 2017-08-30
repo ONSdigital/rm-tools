@@ -14,9 +14,9 @@ RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
 mv pom.xml $WORKSPACE/$RELEASE_FILENAME.pom
 
 # Get Snapshot based on sha
-JAR=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$SERVICE*$SHA | echo$(grep "$SHA") | \
-    sed "s/.*$SERVICE\-\(.*\)\.git\.sha\.$SHA/\1/")
-curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$SERVICE/*$LATEST.jar
+JAR=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$ARTIFACT_ID*$RM_PROJECT_GIT_SHA | echo$(grep "$RM_PROJECT_GIT_SHA") | \
+    sed "s/.*$ARTIFACT_ID\-\(.*\)\.git\.sha\.$RM_PROJECT_GIT_SHA/\1/")
+curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/*$LATEST.jar
 mv *.jar $WORKSPACE/$RELEASE_FILENAME.jar
 
 # Deploy Release to artifactory
