@@ -1,5 +1,7 @@
 #! /bin/bash
 
+    set -e
+    set -o pipefail 
     # Build and deploy SNAPSHOT
     git clone https://github.com/ONSdigital/$RM_PROJECT_GIT_NAME.git
     cd $RM_PROJECT_GIT_NAME
