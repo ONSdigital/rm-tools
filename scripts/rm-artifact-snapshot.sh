@@ -1,5 +1,3 @@
-#! /bin/bash
-
 OPTN=$1
 SERVICE=$2
 SHA=$3
