@@ -15,9 +15,6 @@ RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
 mv pom.xml $WORKSPACE/$RELEASE_FILENAME.pom
 
 # Get Snapshot based on sha
-cd $WORKSPACE/
-git clone https://github.com/ONSdigital/rm-tools.git
-cd $WORKSPACE/rm-tools/scripts
 JAR=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$SERVICE*$SHA | echo$(grep "$SHA") | \
     sed "s/.*$SERVICE\-\(.*\)\.git\.sha\.$SHA/\1/")
 curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$SERVICE/*$LATEST.jar
