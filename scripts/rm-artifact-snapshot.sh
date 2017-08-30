@@ -1,10 +1,5 @@
 #! /bin/bash
 
-OPTN=$1
-SERVICE=$2
-SHA=$3
-case "$OPTN" in 
-  -n)
     # Build and deploy SNAPSHOT
     git clone https://github.com/ONSdigital/$RM_PROJECT_GIT_NAME.git
     cd $RM_PROJECT_GIT_NAME
@@ -18,13 +13,13 @@ case "$OPTN" in
     cd $WORKSPACE
     git clone https://github.com/ONSdigital/rm-tools.git
     cd $WORKSPACE/rm-tools/scripts
-    VERSION=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$SERVICE/maven-metadata.xml | \
+    VERSION=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/maven-metadata.xml | \
     awk '/\<latest\>/' | \
     sed 's/\<latest\>\([0-9].*\)-SNAPSHOT\<\/latest\>/\1/')
-    TIMESTAMP=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$SERVICE/$VERSION-SNAPSHOT/maven-metadata.xml | \
+    TIMESTAMP=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$VERSION-SNAPSHOT/maven-metadata.xml | \
     awk '/\<timestamp\>/' | \
     sed 's/.*\<timestamp\>\(.*\)\<\/timestamp\>.*/\1/')
-    LATEST=$SERVICE-$VERSION-$TIMESTAMP
+    LATEST=$ARTIFACT_ID-$VERSION-$TIMESTAMP
     name=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
     grep "$LATEST.*\.jar" | \
     sed "s/.*\($LATEST.*\)\.jar.*/\1.git.sha./")$RM_PROJECT_GIT_SHA
@@ -34,14 +29,3 @@ case "$OPTN" in
     export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
     curl -u build:$ARTIFACTORY_PASSWORD -X PUT 
     "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$name" -T $name
-    ;;
-  -g)
-    JAR=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$SERVICE*$SHA | echo$(grep "$SHA") | \
-    sed "s/.*$SERVICE\-\(.*\)\.git\.sha\.$SHA/\1/")
-    curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$SERVICE/*$LATEST.jar 
-    ;;
-   *)
-    echo "Error!"
-    exit 1
-    ;;
-esac

@@ -19,8 +19,9 @@ mv pom.xml $WORKSPACE/$RELEASE_FILENAME.pom
 cd $WORKSPACE/
 git clone https://github.com/ONSdigital/rm-tools.git
 cd $WORKSPACE/rm-tools/scripts
-javac LatestBuild.java
-java LatestBuild -g http://artifactory.rmdev.onsdigital.uk . $ARTIFACT_ID $RM_PROJECT_GIT_SHA
+JAR=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$SERVICE*$SHA | echo$(grep "$SHA") | \
+    sed "s/.*$SERVICE\-\(.*\)\.git\.sha\.$SHA/\1/")
+    curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$SERVICE/*$LATEST.jar
 mv *.jar $WORKSPACE/$RELEASE_FILENAME.jar
 
 # Deploy Release to artifactory
