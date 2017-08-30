@@ -11,9 +11,6 @@
  ARTIFACT_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.artifactId | grep "^[^\[]"`
 
  # Get name of latest build in artifactory and build and deploy sha file
- cd $WORKSPACE
- git clone https://github.com/ONSdigital/rm-tools.git
- cd $WORKSPACE/rm-tools/scripts
  TIMESTAMP=$(curl "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$SNAPSHOT_VERSION/maven-metadata.xml" | \
  awk '/<timestamp>/' | \
  sed 's/<timestamp>\(.*\)<\/timestamp>/\1/' | tr -d '[:space:]')
