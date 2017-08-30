@@ -6,7 +6,6 @@ git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git ./totag
 cd totag
 git reset --hard $RM_PROJECT_GIT_SHA
 mvn dependency:tree | awk '/uk.gov.ons.ctp.product.*SNAPSHOT:compile/{err = 1} END {exit err}'
-$MAVEN_HOME/mvn release:prepare
 $MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
 GROUP_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.groupId | grep "^[^\[]"`
@@ -34,13 +33,13 @@ git tag RELEASE_CANDIDATE_$RELEASE_VERSION
 git push --tags
 
 # Update Snapshot Version no on master
-cd $WORKSPACE
-mkdir master
-git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git ./master
-cd master
-$MAVEN_HOME/mvn versions:set -DnextSnapshot=true
-SNAPSHOT_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
-git pull
-git commit pom.xml -m "Update Snapshot version to $SNAPSHOT_VERSION after Release $RELEASE_VERSION"
-git push
+#cd $WORKSPACE
+#mkdir master
+#git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git ./master
+#cd master
+#$MAVEN_HOME/mvn versions:set -DnextSnapshot=true
+#SNAPSHOT_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
+#git pull
+#git commit pom.xml -m "Update Snapshot version to $SNAPSHOT_VERSION after Release $RELEASE_VERSION"
+#git push
 
