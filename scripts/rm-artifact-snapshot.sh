@@ -15,7 +15,8 @@
     cd $WORKSPACE/rm-tools/scripts
     TIMESTAMP=$(curl "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$SNAPSHOT_VERSION/maven-metadata.xml" | \
     awk '/<timestamp>/' | \
-    sed 's/<timestamp>\(.*\)<\/timestamp>/\1/')
+    sed 's/<timestamp>\(.*\)<\/timestamp>/\1/' | tr -d '[:space:]')
+    VERSION=$(echo $SNAPSHOT_VERSION | sed 's/\([0-9\.]*\)-SNAPSHOT/\1/')
     LATEST=$ARTIFACT_ID-$VERSION-$TIMESTAMP
     name=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
     grep "$LATEST.*\.jar" | \
