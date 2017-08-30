@@ -24,5 +24,4 @@
  echo $RM_PROJECT_GIT_SHA | cat > $name
 
  export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
- curl -u build:$ARTIFACTORY_PASSWORD -X PUT 
- "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$name" -T $name
+ curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$name" -T $name
