@@ -14,9 +14,12 @@ RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
 mv pom.xml $WORKSPACE/$RELEASE_FILENAME.pom
 
 # Get Snapshot based on sha
+VERSION=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/maven-metadata.xml | \
+    awk '/<latest>/' | \
+    sed 's/.*<latest>\([0-9\.]*\)\-SNAPSHOT<.*/\1/')
 TIMESTAMP=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$ARTIFACT_ID*$RM_PROJECT_GIT_SHA | echo$(grep $RM_PROJECT_GIT_SHA) | \
     sed "s/.*$ARTIFACT_ID\-\(.*\)\.git.*/\1/")
- curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/**/$ARTIFACT_ID-$TIMESTAMP.jar > $ARTIFACT_ID-$TIMESTAMP.jar 
+ curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$VERSION\-SNAPSHOT/$ARTIFACT_ID-$TIMESTAMP.jar > $ARTIFACT_ID-$TIMESTAMP.jar 
 mv *.jar $WORKSPACE/$RELEASE_FILENAME.jar
 
 # Deploy Release to artifactory
