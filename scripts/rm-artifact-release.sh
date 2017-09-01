@@ -1,4 +1,9 @@
 # Get release Details
+
+echo WORKSPACE=$WORKSPACE
+echo RM_PROJECT_GIT_NAME=$RM_PROJECT_GIT_NAME
+echo RM_PROJECT_GIT_SHA=$RM_PROJECT_GIT_SHA
+
 set -e
 cd $WORKSPACE/
 mkdir totag
@@ -12,6 +17,12 @@ GROUP_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluat
 ARTIFACT_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.artifactId | grep "^[^\[]"`
 RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
 mv pom.xml $WORKSPACE/$RELEASE_FILENAME.pom
+
+echo RELEASE_VERSION=$RELEASE_VERSION
+echo GROUP_ID=$GROUP_ID
+echo ARTIFACT_ID=$ARTIFACT_ID
+echo RELEASE_FILENAME=$RELEASE_FILENAME
+
 
 # Get Snapshot based on sha
 VERSION=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/maven-metadata.xml | \
