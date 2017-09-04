@@ -25,6 +25,9 @@
  sed 's/<timestamp>\(.*\)<\/timestamp>/\1/' | tr -d '[:space:]')
  VERSION=$(echo $SNAPSHOT_VERSION | sed 's/\([0-9\.]*\)-SNAPSHOT/\1/')
  LATEST=$ARTIFACT_ID-$VERSION-$TIMESTAMP
+ 
+ echo LATEST=$LATEST
+ 
  name=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
  grep "$LATEST.*\.jar" | \
  sed "s/.*\($LATEST.*\)\.jar.*/\1.git.sha./")$RM_PROJECT_GIT_SHA
