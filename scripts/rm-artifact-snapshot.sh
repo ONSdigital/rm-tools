@@ -6,8 +6,8 @@
  
  set -e
  cd $WORKSPACE
- # Build and deploy SNAPSHOT
- git clone https://github.com/ONSdigital/$RM_PROJECT_GIT_NAME.git
+ # Build and deploy SNAPSHOTrm-tools.git
+ git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
  cd $RM_PROJECT_GIT_NAME
  git reset --hard $RM_PROJECT_GIT_SHA
  $MAVEN_HOME/mvn clean deploy -P artifactory -X -U
