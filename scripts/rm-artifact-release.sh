@@ -30,8 +30,13 @@ VERSION=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-
     sed 's/.*<latest>\([0-9\.]*\)\-SNAPSHOT<.*/\1/')
 TIMESTAMP=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$ARTIFACT_ID*$RM_PROJECT_GIT_SHA | echo$(grep $RM_PROJECT_GIT_SHA) | \
     sed "s/.*$ARTIFACT_ID\-\(.*\)\.git.*/\1/")
- curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$VERSION\-SNAPSHOT/$ARTIFACT_ID-$TIMESTAMP.jar > $ARTIFACT_ID-$TIMESTAMP.jar 
+#..JAR
+curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$VERSION\-SNAPSHOT/$ARTIFACT_ID-$TIMESTAMP.jar > $ARTIFACT_ID-$TIMESTAMP.jar 
 mv *.jar $WORKSPACE/$RELEASE_FILENAME.jar
+#..Manifest
+curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$VERSION\-SNAPSHOT/$ARTIFACT_ID-$TIMESTAMP.manifest-template.yml > $ARTIFACT_ID-$TIMESTAMP.manifest-template.yml 
+mv $ARTIFACT_ID-$TIMESTAMP.manifest-template.yml $WORKSPACE/manifest-template-$RELEASE_VERSION.yml
+
 
 # Deploy Release to artifactory
 cd $WORKSPACE/
@@ -39,6 +44,8 @@ export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
 curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/$RELEASE_FILENAME.jar" -T $RELEASE_FILENAME.jar
 if [ $? -ne 0 ]; then exit 1;  fi
 curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/$RELEASE_FILENAME.pom" -T $RELEASE_FILENAME.pom
+if [ $? -ne 0 ]; then exit 1;  fi
+curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/manifest-template-$RELEASE_VERSION.yml" -T manifest-template-$RELEASE_VERSION.yml
 if [ $? -ne 0 ]; then exit 1;  fi
 
 # Tag Release
