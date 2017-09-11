@@ -44,11 +44,10 @@ echo RELEASE_FILENAME=$RELEASE_FILENAME
 #if [ $? -ne 0 ]; then exit 1;  fi
 #curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/$RELEASE_FILENAME.pom" -T $RELEASE_FILENAME.pom
 #if [ $? -ne 0 ]; then exit 1;  fi
-#curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/manifest-template-$RELEASE_VERSION.yml" -T manifest-template-$RELEASE_VERSION.yml
-#if [ $? -ne 0 ]; then exit 1;  fi
 
 mvn clean deploy
-
+curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/manifest-template-$RELEASE_VERSION.yml" -T manifest-template.yml
+if [ $? -ne 0 ]; then exit 1;  fi
 
 # Tag Release
 git commit -am "RELEASE VERSION"
