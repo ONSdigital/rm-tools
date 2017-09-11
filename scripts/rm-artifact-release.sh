@@ -32,7 +32,7 @@ then
 fi
 
 # Tag Release
-git commit -am "RELEASE VERSION"
+git commit -am "RELEASE CANDIDATE $RELEASE_VERSION"
 git push --set-upstream origin $RELEASE_VERSION
 
 # Update Snapshot Version no on master
