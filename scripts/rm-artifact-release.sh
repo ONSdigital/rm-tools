@@ -52,7 +52,7 @@ if [ $? -ne 0 ]; then exit 1;  fi
 
 # Tag Release
 git commit -am "RELEASE VERSION"
-git push
+git push --set-upstream origin $RELEASE_VERSION
 
 # Update Snapshot Version no on master
 cd $WORKSPACE
