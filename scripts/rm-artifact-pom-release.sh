@@ -32,7 +32,7 @@ TIMESTAMP=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/a
     sed "s/.*$ARTIFACT_ID\-\(.*\)\.git.*/\1/")
 #..JAR
 curl  http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$VERSION\-SNAPSHOT/$ARTIFACT_ID-$TIMESTAMP.pom > $ARTIFACT_ID-$TIMESTAMP.pom 
-mv *.jar $WORKSPACE/$RELEASE_FILENAME.pom
+mv *.pom $WORKSPACE/$RELEASE_FILENAME.pom
 
 # Deploy Release to artifactory
 cd $WORKSPACE/
