@@ -42,4 +42,7 @@
  MANIFEST_FILENAME=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
  grep "$LATEST.*\.jar" | \
  sed "s/.*\($LATEST.*\)\.jar.*/\1\.manifest\-template\.yml/")
- curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$MANIFEST_FILENAME" -T manifest-template.yml
+ if [ $1 != --no-manifest ]
+ then
+   curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$MANIFEST_FILENAME" -T manifest-template.yml
+ fi
