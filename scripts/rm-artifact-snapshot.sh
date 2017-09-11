@@ -18,9 +18,10 @@
  echo SNAPSHOT_VERSION=$SNAPSHOT_VERSION
  echo GROUP_ID=$GROUP_ID
  echo ARTIFACT_ID=$ARTIFACT_ID
+ export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
 
  # Get name of latest build in artifactory and build and deploy sha file
- TIMESTAMP=$(curl "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/uk/gov/ons/ctp/product/$ARTIFACT_ID/$SNAPSHOT_VERSION/maven-metadata.xml" | \
+ TIMESTAMP=$(curl "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/maven-metadata.xml" | \
  awk '/<timestamp>/' | \
  sed 's/<timestamp>\(.*\)<\/timestamp>/\1/' | tr -d '[:space:]')
  VERSION=$(echo $SNAPSHOT_VERSION | sed 's/\([0-9\.]*\)-SNAPSHOT/\1/')
@@ -34,7 +35,6 @@
  cd $WORKSPACE/$RM_PROJECT_GIT_NAME/target
  echo $RM_PROJECT_GIT_SHA | cat > $name
 
- export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
  curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$name" -T $name
 
  # Get name of latest build in artifactory and build and deploy manifest-template.yml file
