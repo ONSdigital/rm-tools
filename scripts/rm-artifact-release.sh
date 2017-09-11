@@ -14,11 +14,9 @@ $MAVEN_HOME/mvn dependency:tree | awk '/uk.gov.ons.ctp.product.*SNAPSHOT:compile
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
 git checkout -b $RELEASE_VERSION
 git push origin $RELEASE_VERSION
-$MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
 GROUP_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.groupId | grep "^[^\[]"`
 ARTIFACT_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.artifactId | grep "^[^\[]"`
 RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
-mv pom.xml $WORKSPACE/$RELEASE_FILENAME.pom
 
 echo RELEASE_VERSION=$RELEASE_VERSION
 echo GROUP_ID=$GROUP_ID
