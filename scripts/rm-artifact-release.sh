@@ -8,6 +8,7 @@ set -e
 cd $WORKSPACE/
 git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
 git reset --hard $RM_PROJECT_GIT_SHA
+git push origin $RM_PROJECT_GIT_SHA
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[^\[]"`
 git checkout -b $RELEASE_VERSION
 mvn dependency:tree | awk '/uk.gov.ons.ctp.product.*SNAPSHOT:compile/{err = 1} END {exit err}'
