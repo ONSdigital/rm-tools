@@ -38,11 +38,11 @@
  curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$name" -T $name
 
  # Get name of latest build in artifactory and build and deploy manifest-template.yml file
- cd $WORKSPACE/$RM_PROJECT_GIT_NAME
- MANIFEST_FILENAME=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
- grep "$LATEST.*\.jar" | \
- sed "s/.*\($LATEST.*\)\.jar.*/\1\.manifest\-template\.yml/")
- if [ $# -eq 0 ]
+ if [ $# -eq 0 ] #Any arg = no manifest.yml so nothing to do
  then
+   cd $WORKSPACE/$RM_PROJECT_GIT_NAME
+   MANIFEST_FILENAME=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
+   grep "$LATEST.*\.jar" | \
+   sed "s/.*\($LATEST.*\)\.jar.*/\1\.manifest\-template\.yml/")
    curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$MANIFEST_FILENAME" -T manifest-template.yml
  fi
