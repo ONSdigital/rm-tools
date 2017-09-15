@@ -18,6 +18,10 @@ GROUP_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluat
 ARTIFACT_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.artifactId | grep "^[a-z\-]*$"`
 RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
 
+#Check code has been tested and exists as a SNAPSHOT in artifactory
+curl "http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$ARTIFACT_ID*" | grep $RM_PROJECT_GIT_SHA
+if [ $? -ne 0 ]; then exit 1;  fi
+
 echo RELEASE_VERSION=$RELEASE_VERSION
 echo GROUP_ID=$GROUP_ID
 echo ARTIFACT_ID=$ARTIFACT_ID
