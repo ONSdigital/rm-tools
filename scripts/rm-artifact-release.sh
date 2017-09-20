@@ -54,6 +54,13 @@ git push
 # Start CI deploy job
 if [ $# -eq 1 ]
 then
+  #Curl deploy job to deploy to CI
+  TMP="concat(//crumbRequestField,\":\",//crumb)"
+  CRUMB=$(curl -s "http://Build:c468255672f656e992bc18832e5347dd@jenkins.rmdev.onsdigital.uk:8080/crumbIssuer/api/xml?xpath=${TMP}")
+  DATA="{"parameter": [{\"name\":\"VERSION\", \"value\":\"$VERSION\"},{\"name\":\"SHA\", \"value\":\"$SHA\"},{\"name\":\"SERVICE\", \"value\":\"$SERVICE\"}]}"
+	curl -X POST -H "$CRUMB" "http://Build:c468255672f656e992bc18832e5347dd@jenkins.rmdev.onsdigital.uk:8080/job/Deploy_$ARTIFACT_ID_ci/build" \
+	--data-urlencode json="$DATA"
+  # Update git version repo
   mkdir versions
   git clone git@github.com:ONSdigital/sdc-service-versions.git ./versions
   cd versions
@@ -62,12 +69,6 @@ then
   echo $RELEASE_VERSION,$SHA | cat > services/$ARTIFACT_ID.version
   git commit -am "Updated $ARTIFACT_ID version in ci to $RELEASE_VERSION"
   git push
-  #Curl deploy job to deploy to CI
-  TMP="concat(//crumbRequestField,\":\",//crumb)"
-  CRUMB=$(curl -s "http://Build:c468255672f656e992bc18832e5347dd@jenkins.rmdev.onsdigital.uk:8080/crumbIssuer/api/xml?xpath=${TMP}")
-  DATA="{"parameter": [{\"name\":\"VERSION\", \"value\":\"$VERSION\"},{\"name\":\"SHA\", \"value\":\"$SHA\"},{\"name\":\"SERVICE\", \"value\":\"$SERVICE\"}]}"
-	curl -X POST -H "$CRUMB" "http://Build:c468255672f656e992bc18832e5347dd@jenkins.rmdev.onsdigital.uk:8080/job/Deploy_$ARTIFACT_ID_ci/build" \
-	--data-urlencode json="$DATA"
 fi
 
 
