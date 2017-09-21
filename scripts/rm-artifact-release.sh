@@ -4,7 +4,7 @@ echo WORKSPACE=$WORKSPACE
 echo RM_PROJECT_GIT_NAME=$RM_PROJECT_GIT_NAME
 echo RM_PROJECT_GIT_SHA=$RM_PROJECT_GIT_SHA
 
-set -eo pipefail
+set -e
 cd $WORKSPACE/
 git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
 cd $RM_PROJECT_GIT_NAME
