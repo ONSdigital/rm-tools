@@ -10,8 +10,7 @@ git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
 cd $RM_PROJECT_GIT_NAME
 git reset --hard $RM_PROJECT_GIT_SHA
 $MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
-$MAVEN_HOME/mvn dependency:tree
-$MAVEN_HOME/mvn dependency:tree | grep -E "uk\.gov\.ons\.ctp\.product.*SNAPSHOT" | if [ $? -eq 0 ]; then echo "SNAPSHOTS not allowed in releases"; exit 1; fi
+$MAVEN_HOME/mvn dependency:tree | awk '/uk.gov.ons.ctp.product.*SNAPSHOT:compile/{err = 1} END {exit err}'
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[0-9\.]\{7,9\}"`
 git checkout -b $RELEASE_VERSION
 git push origin $RELEASE_VERSION
