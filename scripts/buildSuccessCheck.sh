@@ -1,10 +1,10 @@
 #!/bin/bash
 TOKEN=$1
 JENKINS=$2
-JOBNAME=CTP_Cucumber_16_Offline_Response
+JOBNAME=CTP_Cucumber_9_Notify_Gateway
 BUILD_NO=lastBuild
 declare -i I=0
-while [ $I -lt 16 ]
+while [ $I -lt 17 ]
 do
   echo JOBNAME: $JOBNAME
   echo BUILD_NO: $BUILD_NO
