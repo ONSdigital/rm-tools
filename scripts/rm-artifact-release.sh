@@ -34,6 +34,7 @@ $MAVEN_HOME/mvn clean deploy
 if [ $# -eq 1 ]
 then
   export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
+  echo $GROUP_PATH
   curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/manifest-template-$RELEASE_VERSION.yml" -T manifest-template.yml
   if [ $? -ne 0 ]; then exit 1;  fi
 fi
