@@ -1,13 +1,14 @@
-# Get release Details
+#!/bin/bash
+set -e
 
+# Get release Details
 echo WORKSPACE=$WORKSPACE
 echo RM_PROJECT_GIT_NAME=$RM_PROJECT_GIT_NAME
 echo RM_PROJECT_GIT_SHA=$RM_PROJECT_GIT_SHA
 
-set -e
 # Clone project at required commit
 cd $WORKSPACE/
-echo "Cloning $RM_PROJECT_GIT_NAME on branch $BRANCH" with SHA $RM_PROJECT_GIT_SHA"
+echo "Cloning $RM_PROJECT_GIT_NAME on branch $BRANCH with SHA $RM_PROJECT_GIT_SHA"
 git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
 cd $RM_PROJECT_GIT_NAME
 echo $BRANCH
