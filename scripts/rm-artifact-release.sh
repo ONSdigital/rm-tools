@@ -15,7 +15,7 @@ $MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
 $MAVEN_HOME/mvn dependency:tree | awk '/uk.gov.ons.ctp.product.*SNAPSHOT:compile/{err = 1} END {exit err}'
 RELEASE_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[0-9\.]\{7,9\}"`
 git checkout -b $RELEASE_VERSION
-git push origin $RELEASE_VERSION
+#git push origin $RELEASE_VERSION
 GROUP_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.groupId | grep "^uk\.gov\.ons\.ctp\.[a-z]*$"`
 ARTIFACT_ID=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.artifactId | grep "^[a-z\-]*$"`
 RELEASE_FILENAME=$ARTIFACT_ID-$RELEASE_VERSION
@@ -31,13 +31,13 @@ echo RELEASE_FILENAME=$RELEASE_FILENAME
 
 # Deploy Release to artifactory
 $MAVEN_HOME/mvn clean deploy
-#if [ $# -eq 1 ]
-#then
+if [ $# -eq 1 ]
+then
   export GROUP_PATH=$(echo $GROUP_ID | tr '.' '/')
   echo $GROUP_PATH
   curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-release-local/$GROUP_PATH/$ARTIFACT_ID/$RELEASE_VERSION/manifest-template-$RELEASE_VERSION.yml" -T manifest-template.yml
   if [ $? -ne 0 ]; then exit 1;  fi
-#fi
+fi
 
 # Tag Release
 git commit -am "RELEASE CANDIDATE $RELEASE_VERSION"
