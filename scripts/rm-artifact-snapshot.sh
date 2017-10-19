@@ -32,14 +32,14 @@
 
  name=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
  grep "$LATEST.*\.jar" | \
- sed "s/.*\($LATEST.*\)\.jar.*/\1.git.sha./")$RM_PROJECT_GIT_SHA
+ sed "s/.*\($LATEST.*\)\.jar.*/\1.git.sha./")$RM_PROJECT_GIT_SHA.$BRANCH
  cd $WORKSPACE/$RM_PROJECT_GIT_NAME/target
  echo $RM_PROJECT_GIT_SHA | cat > $name
 
  curl -u build:$ARTIFACTORY_PASSWORD -X PUT "http://artifactory.rmdev.onsdigital.uk/artifactory/libs-snapshot-local/$GROUP_PATH/$ARTIFACT_ID/$SNAPSHOT_VERSION/$name" -T $name
 
  # Get name of latest build in artifactory and build and deploy manifest-template.yml file
- if [ $# -eq 1 ] #Any arg = no manifest.yml so nothing to do
+ if [ $# -eq 1 ] #No arg = no manifest.yml so nothing to do
  then
    cd $WORKSPACE/$RM_PROJECT_GIT_NAME
    MANIFEST_FILENAME=$(curl http://artifactory.rmdev.onsdigital.uk/artifactory/api/search/artifact?name=$LATEST | \
