@@ -9,6 +9,7 @@
  # Build and deploy SNAPSHOTrm-tools.git
  git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
  cd $RM_PROJECT_GIT_NAME
+ if [ $BRANCH != "master" ]; thengit checkout $BRANCH; fi
  git reset --hard $RM_PROJECT_GIT_SHA
  $MAVEN_HOME/mvn clean deploy -P artifactory -X -U
  SNAPSHOT_VERSION=`$MAVEN_HOME/mvn org.apache.maven.plugins:maven-help-plugin:2.2:evaluate -Dexpression=project.version | grep "^[0-9\.]*-SNAPSHOT$"`
