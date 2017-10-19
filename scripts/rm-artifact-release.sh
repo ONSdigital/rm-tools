@@ -8,6 +8,7 @@ set -e
 cd $WORKSPACE/
 git clone git@github.com:ONSdigital/$RM_PROJECT_GIT_NAME.git
 cd $RM_PROJECT_GIT_NAME
+echo $BRANCH
 if [ $BRANCH != "master" ]; then git checkout $BRANCH ; fi
 git reset --hard $RM_PROJECT_GIT_SHA
 $MAVEN_HOME/mvn versions:set -DremoveSnapshot=true
