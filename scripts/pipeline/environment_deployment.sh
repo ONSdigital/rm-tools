@@ -16,9 +16,9 @@ do
     then
     	echo "Deployed $SERVICE version is $DEPLOYED, Deploying version $VERSION to $ENV"
 		TMP="concat(//crumbRequestField,\":\",//crumb)"
-        CRUMB=$(curl -s "$URL/crumbIssuer/api/xml?xpath=${TMP}")
+        CRUMB=$(curl -s "$JURL/crumbIssuer/api/xml?xpath=${TMP}")
         echo $CRUMB
-        echo "Building: $URL/job/Deploy_${SERVICE}_$ENV/build"
+        echo "Building: $JURL/job/Deploy_${SERVICE}_$ENV/build"
         if [ "$ENV" == "sit" ]
         then
           # Passing Release tag as a parameter for SIT
@@ -26,7 +26,7 @@ do
         else
           DATA="{"parameter": [{\"name\":\"VERSION\", \"value\":\"$VERSION\"},{\"name\":\"SHA\", \"value\":\"$SHA\"},{\"name\":\"SERVICE\", \"value\":\"$SERVICE\"}]}"
         fi
-        curl -X POST -H "$CRUMB" "$URL/job/Deploy_${SERVICE}_$ENV/build" \
+        curl -X POST -H "$CRUMB" "$JURL/job/Deploy_${SERVICE}_$ENV/build" \
           --data-urlencode json="$DATA"
     else
     	echo "$SERVICE version $VERSION already deployed to $ENV"
