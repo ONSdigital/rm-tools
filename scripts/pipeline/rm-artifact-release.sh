@@ -75,9 +75,9 @@ then
   echo "Deploying to CI"
   # Curl deploy job to deploy to CI
   TMP="concat(//crumbRequestField,\":\",//crumb)"
-  CRUMB=$(curl -s "http://Build:c468255672f656e992bc18832e5347dd@jenkins.rmdev.onsdigital.uk:8080/crumbIssuer/api/xml?xpath=${TMP}")
+  CRUMB=$(curl -s "${JURL}/crumbIssuer/api/xml?xpath=${TMP}")
   DATA="{"parameter": [{\"name\":\"VERSION\", \"value\":\"$VERSION\"},{\"name\":\"SHA\", \"value\":\"$SHA\"},{\"name\":\"SERVICE\", \"value\":\"$SERVICE\"}]}"
-	curl -X POST -H "$CRUMB" "http://Build:c468255672f656e992bc18832e5347dd@jenkins.rmdev.onsdigital.uk:8080/job/Deploy_$ARTIFACT_ID_ci/build" \
+	curl -X POST -H "$CRUMB" "${JURL}/job/Deploy_$ARTIFACT_ID_ci/build" \
 	--data-urlencode json="$DATA"
 	
   # Update git version repo
