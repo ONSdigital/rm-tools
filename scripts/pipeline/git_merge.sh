@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If redeploying to same space, skip merge
-if [ $TO != $FROM]
+if [ $TO != $FROM ]
 then
 	# Clone TO and FROM branch, 
 	# copy version of each service in FROM to corresponding version in TO
