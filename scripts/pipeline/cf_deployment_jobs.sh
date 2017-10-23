@@ -8,6 +8,7 @@ echo $VERSION | grep "\-SNAPSHOT"
 if [ $? -eq 1 ]
 then
   echo "Deploying RELEASE $VERSION to $SPACE"
+  echo "${RELEASE_URL}/$SERVICE/$VERSION/$SERVICE-$VERSION.$EXT"
   curl ${RELEASE_URL}/$SERVICE/$VERSION/$SERVICE-$VERSION.$EXT > target/${SERVICE}.$EXT
 else
   echo SHA=$SHA
