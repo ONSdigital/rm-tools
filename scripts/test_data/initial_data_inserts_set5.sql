@@ -39,7 +39,7 @@ INSERT INTO collectionexercise.casetypedefault(
 		VALUES (4, 3, 'B', '2f7c7294-ed19-4951-a77f-b6181f0f9891');
 
 INSERT INTO collectionexercise.collectionexercise(	id, exercisepk, surveyfk, name, scheduledstartdatetime, scheduledexecutiondatetime, scheduledreturndatetime, scheduledenddatetime, periodstartdatetime, periodenddatetime, actualexecutiondatetime, actualpublishdatetime, executedby, statefk, samplesize, exerciseref)
-			VALUES ('8051d6e1-f2e6-4d45-ab28-0d05045f56bf', 5, 3, 'BUS3TESTA', '2017-11-01', '2017-11-01', '2017-11-30', '2017-11-01', '2017-11-20', '2017-11-20', NULL, NULL, NULL, 'INIT', NULL, 'BUS3TEST');
+			VALUES ('8051d6e1-f2e6-4d45-ab28-0d05045f56bf', 5, 3, 'BUS3TESTA', '2017-11-01', '2017-11-01', '2017-11-30', '2019-11-01', '2017-11-20', '2017-11-20', NULL, NULL, NULL, 'INIT', NULL, 'BUS3TEST');
    
 --Insert into collection instrument schema
 
