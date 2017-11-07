@@ -15,7 +15,7 @@ INSERT INTO survey.classifiertype(
 
 INSERT INTO action.actiontype(
 	actiontypepk, name, description, handler, cancancel, responserequired)
-	VALUES (4, 'BUS2IC', 'Business 3 Test Invitation Letter', 'Printer', false, false);
+	VALUES (4, 'BUS3IC', 'Business 3 Test Invitation Letter', 'Printer', false, false);
 	
 INSERT INTO action.actionplan(
 	id, actionplanpk, name, description, createdby)
@@ -24,7 +24,9 @@ INSERT INTO action.actionplan(
 INSERT INTO action.actionrule(
 	actionrulepk, actionplanfk, actiontypefk, name, description, daysoffset, priority)
 	VALUES (6, 3, 4, 'BUS3IC+0', 'Business 3 Test(+0 days)', 0, 3);
-	
+
+INSERT INTO actionexporter.templatemapping(actiontypenamepk, templatenamefk, filenameprefix, datemodified)
+VALUES ('BUS3IC', 'initialPrint', 'BUS3IC', current_timestamp);	
 	
 	-- add into collection exercise
 	
