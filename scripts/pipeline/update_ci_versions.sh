@@ -25,4 +25,4 @@ cd ..
 
 # Move jar to correct location
 mkdir target
-mv *.jar target/$ARTIFACT_ID.jar
+find . -iregex ".*[^docker].jar" -exec mv {} target/$ARTIFACT_ID.jar \;
