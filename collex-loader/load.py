@@ -1,13 +1,17 @@
-import csv
-import json
+#!/usr/bin/python
 import argparse
-import requests
+import csv
 from functools import partial
+import json
+
+import requests
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Load collection exercise CSV.')
     parser.add_argument("config", help="Configuration file")
     return parser.parse_args() 
+
 
 def map_columns(column_mappings, row):
     new_row = dict()
@@ -15,6 +19,7 @@ def map_columns(column_mappings, row):
         if key and value:
             new_row[column_mappings[key] if column_mappings[key] else key] = value
     return new_row
+
 
 def post_collex(data, url, user, password):
     response = requests.post(url, json=data, auth=(user, password))
@@ -24,6 +29,7 @@ def post_collex(data, url, user, password):
 
     print("%s <= %s (%s)" % (status_code, data, detail_text))
 
+
 def dump_collex(data):
     survey_id = data['surveyRef']
     period = data['exerciseRef']
@@ -32,11 +38,13 @@ def dump_collex(data):
         with open(filename, 'w') as fo:
             json.dump(data, fo)
 
+
 def clean_row(row):
     row['name'] = row['name'][:20]
 
     return row
         
+
 def process_file(filename, row_handler):
     with open(filename) as fp:
         reader = csv.DictReader(fp)
@@ -46,14 +54,19 @@ def process_file(filename, row_handler):
             if new_row:
                 row_handler(data=clean_row(new_row))
 
-args = parse_args()
-print("Config filename: %s" % args.config)
-config = json.load(open(args.config))
-input_file = config['inputFile']
-print("Input filename: %s" % input_file)
-column_mappings = config['columnMappings']
-api_url = config['api']['url']
-print ("API URL: %s" % api_url)
-row_handler = dump_collex if config['dryRun'] else partial(post_collex, url=api_url, user=config['api']['user'], password=config['api']['password'])
 
-result = process_file(input_file, row_handler)
+if __name__ == '__main__':
+    args = parse_args()
+    print("Config filename: %s" % args.config)
+    config = json.load(open(args.config))
+    input_file = config['inputFile']
+    print("Input filename: %s" % input_file)
+    column_mappings = config['columnMappings']
+    api_url = config['api']['url']
+    print("API URL: %s" % api_url)
+    row_handler = dump_collex if config['dryRun'] else partial(post_collex,
+                                                            url=api_url,
+                                                            user=config['api']['user'],
+                                                            password=config['api']['password'])
+
+    process_file(input_file, row_handler)

@@ -3,10 +3,17 @@ collex-loader
 
 The collex-loader is a Python script for loading the [data as supplied by the business](data/CE_Details_for_loading_into_RM.csv) into the collection exercise service using JSON POST requests.
 
+example usage
+-------------
+
+```
+python load.py config/app-config.json
+```
+
 configuration
 -------------
 
-The loader script requires a JSON configuration file to be supplied as the first command line parameter.  JSON was chosed for the configuration in place of YML as it requires no additional libraries to parse. There is [an example of the configuration file](config/app-config.json), repeated here for clarity.
+The loader script requires a JSON configuration file to be supplied as the first command line parameter.  JSON was chosen for the configuration in place of YML as it requires no additional libraries to parse. There is [an example of the configuration file](config/app-config.json), repeated here for clarity.
 
 ```
 {
