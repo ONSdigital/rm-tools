@@ -4,4 +4,4 @@ COPY target/cfdatabasetool*.jar /opt/cfdatabasetool.jar
 
 EXPOSE 9000
 
-ENTRYPOINT [ "java", "-jar", "/opt/cfdatabasetool.jar" ]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -jar /opt/cfdatabasetool.jar" ]
