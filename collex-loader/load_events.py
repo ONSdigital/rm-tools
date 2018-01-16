@@ -4,7 +4,7 @@ from functools import partial
 import json
 import requests
 from file_processing import process_files
-import datetime
+from datetime import datetime, timezone
 
 # Ignore these as they are the key for the collection exercise and don't represent event data
 ignore_columns = [ 'surveyRef', 'exerciseRef' ]
@@ -15,9 +15,8 @@ def parse_args():
     return parser.parse_args() 
 
 def post_event(collex_id, event_tag, date, url, user, password):
-    post_data = dict()
-    post_data['tag'] = event_tag
-    post_data['timestamp'] = date
+    post_data = get_post_data(event_tag, date)
+
     response = requests.post(url.format(id=collex_id), json=post_data, auth=(user, password))
 
     status_code = response.status_code
@@ -25,11 +24,32 @@ def post_event(collex_id, event_tag, date, url, user, password):
 
     print("{} <= {} ({})".format(status_code, post_data, detail_text))
 
+def reformat_date(date):
+    if len(date) == 5:
+        # Looks like the dates are zero padded unless the day number is < 10 in which case the 0 is missing
+        # so if we have a 5 digit date we can assume it's a date in the first 9 days of a month and prefixing
+        # a zero will give us the correct value
+        date = '0' + date
 
-def dump_event(collex_id, event_tag, date_str):
+    try:
+        raw = datetime.strptime(date, '%d%m%y')
+        raw = raw.replace(tzinfo=timezone.utc)
+    except ValueError:
+        print("Failed to parse {}".format(date))
+        raise
+
+    return raw.isoformat(timespec='milliseconds')
+
+def get_post_data(event_tag, date_str):
     post_data = dict()
     post_data['tag'] = event_tag
-    post_data['timestamp'] = date_str
+    post_data['timestamp'] = reformat_date(date_str)
+
+    return post_data
+
+def dump_event(collex_id, event_tag, date_str):
+    post_data = get_post_data(event_tag, date_str)
+
     filename = "%s-%s.json" % (event_tag, collex_id)
     with open(filename, 'w') as fo:
         json.dump(post_data, fo)

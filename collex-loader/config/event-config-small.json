@@ -1,5 +1,5 @@
 {
-    "inputFiles": ["data/073__2018_Schedule.csv"],
+    "inputFiles": ["data/tiny-events.csv"],
     "dryRun": false,
     "api":{
         "post-url": "http://localhost:8145/collectionexercises/{id}/events",
