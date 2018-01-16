@@ -3,8 +3,11 @@ import csv
 def map_columns(column_mappings, row):
     new_row = dict()
     for key, value in row.items():
-        if key and value:
-            new_row[column_mappings[key] if column_mappings[key] else key] = value
+        try:
+            if key and value:
+                new_row[column_mappings[key] if column_mappings[key] else key] = value
+        except KeyError:
+           new_row[key] = value 
     return new_row
 
 def process_file(filename, row_handler, column_mappings):
