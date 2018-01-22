@@ -12,7 +12,7 @@ python load.py config/collex-config.json
 ```
 ### loading collection exercise events
 ```
-python load.py config/event-config.json
+python load_events.py config/event-config.json
 ```
 
 ## configuration
