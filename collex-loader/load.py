@@ -43,7 +43,7 @@ if __name__ == '__main__':
     input_files = config['inputFiles']
     print("Input filenames: %s" % input_files)
     column_mappings = config['columnMappings']
-    api_url = config['api']['url']
+    api_url = config['api']['post-url']
     print("API URL: %s" % api_url)
     row_handler = dump_collex if config['dryRun'] else partial(post_collex,
                                                             url=api_url,
