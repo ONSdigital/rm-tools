@@ -5,6 +5,7 @@ import json
 import requests
 from file_processing import process_files
 from datetime import datetime, timezone
+import re
 
 # Ignore these as they are the key for the collection exercise and don't represent event data
 ignore_columns = [ 'surveyRef', 'exerciseRef' ]
@@ -38,7 +39,12 @@ def reformat_date(date):
         print("Failed to parse {}".format(date))
         raise
 
-    return raw.isoformat(timespec='milliseconds')
+    time_str = raw.isoformat(timespec='milliseconds')
+    // WATCH OUT: this removes the last : from a valid ISO8601 date string to form another
+    // valid ISO8601 date string that can be easily deserialised by Jackson in the Java service
+    clean_str = re.sub(r'(.*):', '\\1', time_str)
+
+    return clean_str
 
 def get_post_data(event_tag, date_str):
     post_data = dict()
@@ -68,7 +74,11 @@ def get_collection_exercise_uuid(row, api_config):
     response = requests.get(url, auth=(api_config['user'], api_config['password']))
     data = json.loads(response.text)
 
-    return data['id']
+    try:
+        if data['error']:
+            raise ValueError(data['error']['message'])
+    except KeyError:
+        return data['id']
 
 if __name__ == '__main__':
     args = parse_args()
