@@ -1,4 +1,4 @@
-survey_code,survey_period,mps,go_live,reference_period_start,reference_period_end,return_by,reminder,exercise_end
+survey_code,survey_period,mps,go_live,ref_period_start,ref_period_end,return_by,reminder,exercise_end
 134,201801,190118,250118,010118,310118,070218,130218,290220
 134,201802,160218,220218,010218,280218,070318,130318,310320
 134,201803,210318,260318,010318,310318,090418,110418,300420
