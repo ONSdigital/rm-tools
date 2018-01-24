@@ -8,8 +8,8 @@
         "password": "secret"
     },
     "columnMappings": {
-        "Survey Code": "surveyRef",
-        "Survey Period": "exerciseRef"
+        "survey_code": "surveyRef",
+        "survey_period": "exerciseRef"
     }
 }
 
