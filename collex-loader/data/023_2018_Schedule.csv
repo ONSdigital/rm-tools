@@ -1,4 +1,4 @@
-Survey Code,Survey Period,MPS,Go Live,REFP_START_DATE,REFP_END_DATE,Return By Date,Reminder,Exercise End
+survey_code,survey_period,mps,go_live,ref_period_start,ref_period_end,return_by,reminder,exercise_end
 023,1801,180118,230118,,,30218,50218,290220
 023,1802,150218,200218,,,30318,50318,310320
 023,1803,220318,270318,,,70418,90418,300420
