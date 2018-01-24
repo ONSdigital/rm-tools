@@ -1,8 +1,8 @@
 {
-    "inputFile": "data/CE_Details_for_loading_into_RM.csv",
+    "inputFiles": ["data/CE_Details_for_loading_into_RM.csv"],
     "dryRun": false,
     "api":{
-        "url": "http://localhost:8145/collectionexercises",
+        "post-url": "http://localhost:8145/collectionexercises",
         "user": "admin",
         "password": "secret"
     },
