@@ -76,7 +76,7 @@ def get_collection_exercise_uuid(row, api_config):
 
     try:
         if data['error']:
-            raise ValueError(data['message'])
+            raise ValueError(data['error']['message'])
     except KeyError:
         return data['id']
 
