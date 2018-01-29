@@ -76,7 +76,8 @@ def get_collection_exercise_uuid(row, api_config):
 
     try:
         if data['error']:
-            raise ValueError(data['error']['message'])
+            # There are 2 different formats of the data depending on what kind of error it is, so just dump it out as json
+            raise ValueError(json.dumps(data))
     except KeyError:
         return data['id']
 
