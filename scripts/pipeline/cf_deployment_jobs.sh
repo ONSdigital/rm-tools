@@ -21,5 +21,6 @@ else
     sed "s/.*$SERVICE\-\(.*\)\.git.*/\1/")
   echo TIMESTAMP=$TIMESTAMP
   # Get SNAPSHOT build from artifactory
+  echo "CURLING: ${SNAPSHOT_URL}/$SERVICE/$VERSION-SNAPSHOT/$SERVICE-$TIMESTAMP.$EXT"
   curl ${SNAPSHOT_URL}/$SERVICE/$VERSION-SNAPSHOT/$SERVICE-$TIMESTAMP.$EXT > target/${SERVICE}.$EXT
 fi
