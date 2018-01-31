@@ -99,12 +99,13 @@ if __name__ == '__main__':
 
     api_config = config['api']
     if dry_run:
-    	event_handler = dump_event 
-    else: 
-	partial(post_event, 
-		user=api_config['user'], 
-		password=api_config['password'], 
-		url=api_config['post-url'])
+        event_handler = dump_event
+    else:
+        event_handler = partial(post_event,
+                user=api_config['user'],
+                password=api_config['password'],
+                url=api_config['post-url'])
+
     row_handler = partial(row_handler, api_config=api_config, event_handler=event_handler)
 
     process_files(input_files, row_handler, column_mappings)
