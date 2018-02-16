@@ -2,7 +2,7 @@
 
 The collex-loader package is a group of Python scripts for loading data as supplied by the business into the collection exercise service using JSON POST requests. It currently supports the loading of:
 - [Collection exercises](data/CE_Details_for_loading_into_RM.csv) via the [load.py](load.py) script
-- [Collection exercises events](data/134_2018_Schedule.csv) via the [load_events.py](load_events.py) script
+- [Collection exercises events](data/2018_surveys_schedule.csv) via the [load_events.py](load_events.py) script
 
 ## example usage
 
