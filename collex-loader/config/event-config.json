@@ -1,5 +1,5 @@
 {
-    "inputFiles": ["data/023_2018_Schedule.csv", "data/073__2018_Schedule.csv", "data/134_2018_Schedule.csv", "data/139_2018_schedule.csv"],
+    "inputFiles": ["data/2018_surveys_schedule.csv"],
     "dryRun": false,
     "api":{
         "post-url": "http://localhost:8145/collectionexercises/{id}/events",
