@@ -101,8 +101,8 @@ if __name__ == '__main__':
     config = json.load(open(args.config))
     config['api']['post-url'] = args.posturl or config['api']['post-url']
     config['api']['get-url'] = args.geturl or config['api']['get-url']
-    config['api']['user'] = args.posturl or config['api']['user']
-    config['api']['password'] = args.posturl or config['api']['password']
+    config['api']['user'] = args.user or config['api']['user']
+    config['api']['password'] = args.password or config['api']['password']
 
     input_files = config['inputFiles']
     print("Input filenames: {}".format(input_files))

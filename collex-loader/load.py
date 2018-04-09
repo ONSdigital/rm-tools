@@ -46,8 +46,8 @@ if __name__ == '__main__':
     print("Config filename: %s" % args.config)
     config = json.load(open(args.config))
     config['api']['post-url'] = args.posturl or config['api']['post-url']
-    config['api']['user'] = args.posturl or config['api']['user']
-    config['api']['password'] = args.posturl or config['api']['password']
+    config['api']['user'] = args.user or config['api']['user']
+    config['api']['password'] = args.password or config['api']['password']
     input_files = config['inputFiles']
     print("Input filenames: %s" % input_files)
     column_mappings = config['columnMappings']
