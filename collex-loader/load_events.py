@@ -10,10 +10,16 @@ import re
 # Ignore these as they are the key for the collection exercise and don't represent event data
 ignore_columns = [ 'surveyRef', 'exerciseRef' ]
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Load collection exercise event CSV.')
     parser.add_argument("config", help="Configuration file")
+    parser.add_argument("--posturl", help="URL to load events", nargs='?')
+    parser.add_argument("--geturl", help="URL to get collection exercises UUID", nargs='?')
+    parser.add_argument("--user", help="User to load events", nargs='?')
+    parser.add_argument("--password", help="Password to load events", nargs='?')
     return parser.parse_args() 
+
 
 def post_event(collex_id, event_tag, date, url, user, password):
     post_data = get_post_data(event_tag, date)
@@ -24,6 +30,7 @@ def post_event(collex_id, event_tag, date, url, user, password):
     detail_text = response.text if status_code != 201 else ''
 
     print("{} <= {} ({})".format(status_code, post_data, detail_text))
+
 
 def reformat_date(date):
     if len(date) == 5:
@@ -46,12 +53,14 @@ def reformat_date(date):
 
     return clean_str
 
+
 def get_post_data(event_tag, date_str):
     post_data = dict()
     post_data['tag'] = event_tag
     post_data['timestamp'] = reformat_date(date_str)
 
     return post_data
+
 
 def dump_event(collex_id, event_tag, date_str):
     post_data = get_post_data(event_tag, date_str)
@@ -60,11 +69,13 @@ def dump_event(collex_id, event_tag, date_str):
     with open(filename, 'w') as fo:
         json.dump(post_data, fo)
 
+
 def row_handler(data, api_config, event_handler):
     collex_id = get_collection_exercise_uuid(data, api_config)
     for key, value in data.items():
         if not key in ignore_columns:
             event_handler(collex_id, key, value)
+
 
 def get_collection_exercise_uuid(row, api_config):
     survey_ref = row['surveyRef']
@@ -82,11 +93,16 @@ def get_collection_exercise_uuid(row, api_config):
     except KeyError:
         return data['id']
 
+
 if __name__ == '__main__':
     args = parse_args()
 
     print("Config filename: {}".format(args.config))
     config = json.load(open(args.config))
+    config['api']['post-url'] = args.posturl or config['api']['post-url']
+    config['api']['get-url'] = args.geturl or config['api']['get-url']
+    config['api']['user'] = args.posturl or config['api']['user']
+    config['api']['password'] = args.posturl or config['api']['password']
 
     input_files = config['inputFiles']
     print("Input filenames: {}".format(input_files))
