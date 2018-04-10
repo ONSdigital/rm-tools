@@ -5,10 +5,15 @@ import json
 import requests
 from file_processing import process_files
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Load collection exercise CSV.')
     parser.add_argument("config", help="Configuration file")
-    return parser.parse_args() 
+    parser.add_argument("--posturl", help="URL to load collection exercises", nargs='?')
+    parser.add_argument("--user", help="User to load collection exercises", nargs='?')
+    parser.add_argument("--password", help="Password to load collection exercises", nargs='?')
+    return parser.parse_args()
+
 
 def post_collex(data, url, user, password):
     data = clean_row(data)
@@ -40,6 +45,9 @@ if __name__ == '__main__':
     args = parse_args()
     print("Config filename: %s" % args.config)
     config = json.load(open(args.config))
+    config['api']['post-url'] = args.posturl or config['api']['post-url']
+    config['api']['user'] = args.user or config['api']['user']
+    config['api']['password'] = args.password or config['api']['password']
     input_files = config['inputFiles']
     print("Input filenames: %s" % input_files)
     column_mappings = config['columnMappings']
