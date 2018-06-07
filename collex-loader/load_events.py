@@ -24,7 +24,7 @@ def parse_args():
 def post_event(collex_id, event_tag, date, url, user, password):
     post_data = get_post_data(event_tag, date)
 
-    response = requests.post(url.format(id=collex_id), json=post_data, auth=(user, password))
+    response = requests.post(url.format(id=collex_id), json=post_data, auth=(user, password), verify=False)
 
     status_code = response.status_code
     detail_text = response.text if status_code != 201 else ''
@@ -82,8 +82,11 @@ def get_collection_exercise_uuid(row, api_config):
     exercise_ref = row['exerciseRef']
 
     url = api_config['get-url'].format(exercise_ref=exercise_ref, survey_ref=survey_ref)
-    response = requests.get(url, auth=(api_config['user'], api_config['password']))
+    response = requests.get(url, auth=(api_config['user'], api_config['password']), verify=False)
     data = json.loads(response.text)
+
+    print("PROCESSING SURVEYREF: {}".format(survey_ref))
+    print("PROCESSING COLLECTION_EXERCISE: {}".format(exercise_ref))
 
     try:
         if data['error']:

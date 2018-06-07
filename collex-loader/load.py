@@ -17,7 +17,7 @@ def parse_args():
 
 def post_collex(data, url, user, password):
     data = clean_row(data)
-    response = requests.post(url, json=data, auth=(user, password))
+    response = requests.post(url, json=data, auth=(user, password), verify=False)
 
     status_code = response.status_code
     detail_text = response.text if status_code != 201 else ''
