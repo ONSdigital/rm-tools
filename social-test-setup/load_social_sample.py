@@ -7,7 +7,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 url = 'http://localhost:8125/'
-filepath = 'data/test-1-sample.csv'
+filepath = 'data/test-1-sample-2-units.csv'
 user = 'admin'
 password = 'secret'
 max_retries = 10
