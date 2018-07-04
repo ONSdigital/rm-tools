@@ -23,9 +23,6 @@ SURVEY_PATH=data/OHS_survey_details.json
 
 
 ### Create the Survey (With Classifiers)
-Set `SURVEY_PATH` to the path to the survey details json file you wish to use.
-To use the provided OHS surveys details in this repo set it to `data/OHS_survey_details.json`.
-
 Run `make create-survey`
 
 If successful a `SURVEY_ID` value should be printed, add it to the env for the next steps.
