@@ -1,15 +1,16 @@
 import json
+import os
 from pprint import pprint
 
 import requests
-from requests.auth import HTTPBasicAuth
 
-action_url = 'http://localhost:8151/'
-user = 'admin'
-password = 'secret'
+from config import Config
+
+ACTION_SERVICE_URL = os.getenv('ACTION_SERVICE_URL')
+ACTION_PLAN_ID = os.getenv('ACTION_PLAN_ID')
 
 action_rule_pre_not = {
-    'actionPlanId': '7fad3e8c-6ba2-4d2c-8131-cb07a039ca46',  # Changes every run
+    'actionPlanId': ACTION_PLAN_ID,
     'actionTypeName': 'SOCIALPRENOT',
     'name': 'OHSSOCIALPRENOT+0',
     'description': 'OHS Social Pre-notification (+0 days)',
@@ -23,14 +24,17 @@ action_rule_not['name'] = 'OHSSOCIALNOT +0'
 action_rule_not['description'] = 'OHS Social Notification (+0 days)'
 
 if __name__ == '__main__':
-    pre_not_response = requests.post(url=f'{action_url}actionrules',
+    pre_not_response = requests.post(url=f'{ACTION_SERVICE_URL}/actionrules',
                                      json=action_rule_pre_not,
-                                     auth=HTTPBasicAuth(username=user, password=password))
+                                     auth=Config.AUTH)
 
-    pprint(json.loads(pre_not_response.content))
+    pre_not_response.raise_for_status()
 
-    not_response = requests.post(url=f'{action_url}actionrules',
+    not_response = requests.post(url=f'{ACTION_SERVICE_URL}/actionrules',
                                  json=action_rule_not,
-                                 auth=HTTPBasicAuth(username=user, password=password))
+                                 auth=Config.AUTH)
+
+    not_response.raise_for_status()
 
     pprint(json.loads(pre_not_response.content))
+    pprint(json.loads(not_response.content))

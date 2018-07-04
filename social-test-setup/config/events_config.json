@@ -2,8 +2,8 @@
     "inputFiles": ["data/test-1-events.csv"],
     "dryRun": false,
     "api":{
-        "post-url": "http://localhost:8145/collectionexercises/b025ca8d-0392-4b14-ad65-81ef0d52ecdf/events",
-        "get-url": "http://localhost:8145/collectionexercises/1/survey/999",
+        "post-url": "BASE_URL/collectionexercises/COLLECTION_EXERCISE_ID/events",
+        "get-url": "BASE_URL/collectionexercises/1/survey/999",
         "user": "admin",
         "password": "secret"
     },

@@ -1,24 +1,25 @@
 import json
+import os
 from pprint import pprint
 import sys
 from time import sleep
 
 import requests
-from requests.auth import HTTPBasicAuth
 
-url = 'http://localhost:8125/'
-filepath = 'data/test-1-sample-2-units.csv'
-user = 'admin'
-password = 'secret'
-max_retries = 10
+from config import Config
 
-with open(filepath, 'rb') as fp:
+MAX_RETRIES = 100
+
+SAMPLE_SERVICE_URL = os.getenv('SAMPLE_SERVICE_URL')
+SAMPLE_PATH = os.getenv('SAMPLE_PATH')
+
+with open(SAMPLE_PATH, 'rb') as fp:
     files = {'file': fp.read()}
 
 if __name__ == '__main__':
-    sample_upload_response = requests.post(f'{url}samples/SOCIAL/fileupload',
+    sample_upload_response = requests.post(f'{SAMPLE_SERVICE_URL}samples/SOCIAL/fileupload',
                                            files=files,
-                                           auth=HTTPBasicAuth(username=user, password=password))
+                                           auth=Config.AUTH)
 
     sample_upload_response.raise_for_status()
     sample_upload_response = json.loads(sample_upload_response.content)
@@ -32,20 +33,26 @@ if __name__ == '__main__':
 
     sample_summary_id = sample_upload_response['id']
 
-    for retry in range(max_retries):
-        sample_summary_response = requests.get(f'{url}samples/samplesummary/{sample_summary_id}',
-                                               auth=HTTPBasicAuth(username=user, password=password))
+    for retry in range(MAX_RETRIES):
+        sample_summary_response = requests.get(f'{SAMPLE_SERVICE_URL}samples/'
+                                               f'samplesummary/{sample_summary_id}',
+                                               auth=Config.AUTH)
+        if sample_summary_response.status_code == 404:
+            sleep(0.5)
+            continue
 
         sample_summary_response.raise_for_status()
         summary = json.loads(sample_summary_response.content)
 
         if summary['state'] == 'ACTIVE':
             pprint(json.loads(sample_summary_response.content))
+
             break
 
         sleep(0.5)
     else:
-        print(f'Max retries reached ({max_retries}), no successful response')
+        print(f'Max retries reached ({MAX_RETRIES}), no successful response')
         sys.exit(1)
 
     print("Sample successfully ingested!")
+    print(f'SAMPLE_SUMMARY_ID={sample_summary_id}')

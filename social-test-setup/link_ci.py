@@ -1,17 +1,21 @@
+import os
+
 import requests
-from requests.auth import HTTPBasicAuth
 
-ci_url = 'http://localhost:8002/'
-user = 'admin'
-password = 'secret'
+from config import Config
 
-collex_id = 'b025ca8d-0392-4b14-ad65-81ef0d52ecdf'
-survey_id = '3471e953-3dac-4364-acda-de6da50ad05c'
-ci_id = 'facf940f-a376-4fdc-b308-1117710aaa9e'
+COLLECTION_INSTRUMENT_ID = os.getenv('COLLECTION_INSTRUMENT_ID')
+COLLECTION_EXERCISE_ID = os.getenv('COLLECTION_EXERCISE_ID')
+SURVEY_ID = os.getenv('SURVEY_ID')
+COLLECTION_INSTRUMENT_SERVICE_URL = os.getenv('COLLECTION_INSTRUMENT_SERVICE_URL')
 
 if __name__ == '__main__':
-    link_collex_to_ce = requests.post(url=f'{ci_url}collection-instrument-api/1.0.2/link-exercise/{ci_id}/{collex_id}',
-                                      auth=HTTPBasicAuth(username=user, password=password))
+    link_response = requests.post(url=f'{COLLECTION_INSTRUMENT_SERVICE_URL}'
+                                      f'collection-instrument-api/1.0.2/link-exercise/'
+                                      f'{COLLECTION_INSTRUMENT_ID}/'
+                                      f'{COLLECTION_EXERCISE_ID}',
+                                  auth=Config.AUTH)
 
-    print(link_collex_to_ce.status_code)
-    print(link_collex_to_ce.content.decode())
+    link_response.raise_for_status()
+    print(link_response.status_code)
+    print(link_response.content.decode())

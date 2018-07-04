@@ -1,21 +1,22 @@
-import json
+import os
 from pprint import pprint
 
 import requests
-from requests.auth import HTTPBasicAuth
 
-collex_url = 'http://localhost:8145/'
-user = 'admin'
-password = 'secret'
+from config import Config
 
-collex_id = 'b025ca8d-0392-4b14-ad65-81ef0d52ecdf'
-sample_summary_id = '36b1baa6-cdb0-4b7b-b321-a794cfde69fb'
+COLLECTION_EXERCISE_URL = os.getenv('COLLECTION_EXERCISE_SERVICE_URL')
+COLLECTION_EXERCISE_ID = os.getenv('COLLECTION_EXERCISE_ID')
+SAMPLE_SUMMARY_ID = os.getenv('SAMPLE_SUMMARY_ID')
 
-sample_summarys = {'sampleSummaryIds': [sample_summary_id]}
+sample_summaries = {'sampleSummaryIds': [SAMPLE_SUMMARY_ID]}
 
 if __name__ == '__main__':
-    link_collex_response = requests.put(url=f'{collex_url}collectionexercises/link/{collex_id}',
-                                        json=sample_summarys,
-                                        auth=HTTPBasicAuth(username=user, password=password))
+    link_collex_response = requests.put(
+        url=f'{COLLECTION_EXERCISE_URL}collectionexercises/link/{COLLECTION_EXERCISE_ID}',
+        json=sample_summaries,
+        auth=Config.AUTH)
+    link_collex_response.raise_for_status()
+
     print(link_collex_response.status_code)
-    pprint(json.loads(link_collex_response.content))
+    pprint(link_collex_response.json())

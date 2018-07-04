@@ -1,19 +1,18 @@
+import os
+
 import requests
-from requests.auth import HTTPBasicAuth
 
-collex_id = 'b025ca8d-0392-4b14-ad65-81ef0d52ecdf'
-url = 'http://localhost:8145/'
-user = 'admin'
-password = 'secret'
+from config import Config
 
-headers = {
-    'Cache-Control': 'no-cache',
-    'Postman-Token': '7bbe18e1-016c-4258-8a85-4d68f1150a82',
-    }
+COLLECTION_EXERCISE_ID = os.getenv('COLLECTION_EXERCISE_ID')
+COLLECTION_EXERCISE_SERVICE_URL = os.getenv('COLLECTION_EXERCISE_SERVICE_URL')
 
-response = requests.post(f'{url}collectionexerciseexecution/{collex_id}',
-                         headers=headers,
-                         auth=HTTPBasicAuth(username=user,
-                                            password=password))
+if __name__ == '__main__':
+    execute_response = requests.post(f'{COLLECTION_EXERCISE_SERVICE_URL}'
+                                     f'collectionexerciseexecution/'
+                                     f'{COLLECTION_EXERCISE_ID}',
+                                     auth=Config.AUTH)
 
-print(response.text)
+    execute_response.raise_for_status()
+
+    print(execute_response.text)
