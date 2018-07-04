@@ -10,13 +10,11 @@ To run locally against the rasrm-docker-dev services use this initial config.
 AUTH_USERNAME=admin
 AUTH_PASSWORD=secret
 
-SURVEY_SERVICE_URL=http://localhost:8080/
-COLLECTION_EXERCISE_SERVICE_URL=http://localhost:8145/
-SAMPLE_SERVICE_URL=http://localhost:8125/
-COLLECTION_INSTRUMENT_SERVICE_URL=http://localhost:8002/
-ACTION_SERVICE_URL=http://localhost:8151/
-
-SURVEY_PATH=data/OHS_survey_details.json
+SURVEY_SERVICE_URL=http://localhost:8080
+COLLECTION_EXERCISE_SERVICE_URL=http://localhost:8145
+SAMPLE_SERVICE_URL=http://localhost:8125
+COLLECTION_INSTRUMENT_SERVICE_URL=http://localhost:8002
+ACTION_SERVICE_URL=http://localhost:8151
 ```
 
 ## Social Test Setup
