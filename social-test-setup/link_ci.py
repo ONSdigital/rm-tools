@@ -11,7 +11,7 @@ COLLECTION_INSTRUMENT_SERVICE_URL = os.getenv('COLLECTION_INSTRUMENT_SERVICE_URL
 
 if __name__ == '__main__':
     link_response = requests.post(url=f'{COLLECTION_INSTRUMENT_SERVICE_URL}'
-                                      f'collection-instrument-api/1.0.2/link-exercise/'
+                                      f'/collection-instrument-api/1.0.2/link-exercise/'
                                       f'{COLLECTION_INSTRUMENT_ID}/'
                                       f'{COLLECTION_EXERCISE_ID}',
                                   auth=Config.AUTH)

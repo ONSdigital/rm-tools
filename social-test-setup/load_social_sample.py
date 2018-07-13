@@ -17,7 +17,8 @@ with open(SAMPLE_PATH, 'rb') as fp:
     files = {'file': fp.read()}
 
 if __name__ == '__main__':
-    sample_upload_response = requests.post(f'{SAMPLE_SERVICE_URL}samples/SOCIAL/fileupload',
+    sample_upload_response = requests.post(f'{SAMPLE_SERVICE_URL}'
+                                           f'/samples/SOCIAL/fileupload',
                                            files=files,
                                            auth=Config.AUTH)
 
@@ -34,8 +35,8 @@ if __name__ == '__main__':
     sample_summary_id = sample_upload_response['id']
 
     for retry in range(MAX_RETRIES):
-        sample_summary_response = requests.get(f'{SAMPLE_SERVICE_URL}samples/'
-                                               f'samplesummary/{sample_summary_id}',
+        sample_summary_response = requests.get(f'{SAMPLE_SERVICE_URL}'
+                                               f'/samples/samplesummary/{sample_summary_id}',
                                                auth=Config.AUTH)
         if sample_summary_response.status_code == 404:
             sleep(0.5)

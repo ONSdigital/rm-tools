@@ -7,7 +7,7 @@ from config import Config
 ACTION_SERVICE_URL = os.getenv('ACTION_SERVICE_URL')
 
 if __name__ == '__main__':
-    response = requests.get(f'{ACTION_SERVICE_URL}actionplans',
+    response = requests.get(f'{ACTION_SERVICE_URL}/actionplans',
                             auth=Config.AUTH)
     response.raise_for_status()
     actionplans = response.json()

@@ -9,7 +9,7 @@ COLLECTION_EXERCISE_SERVICE_URL = os.getenv('COLLECTION_EXERCISE_SERVICE_URL')
 
 if __name__ == '__main__':
     execute_response = requests.post(f'{COLLECTION_EXERCISE_SERVICE_URL}'
-                                     f'collectionexerciseexecution/'
+                                     f'/collectionexerciseexecution/'
                                      f'{COLLECTION_EXERCISE_ID}',
                                      auth=Config.AUTH)
 

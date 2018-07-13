@@ -13,7 +13,8 @@ sample_summaries = {'sampleSummaryIds': [SAMPLE_SUMMARY_ID]}
 
 if __name__ == '__main__':
     link_collex_response = requests.put(
-        url=f'{COLLECTION_EXERCISE_URL}collectionexercises/link/{COLLECTION_EXERCISE_ID}',
+        url=f'{COLLECTION_EXERCISE_URL}'
+            f'/collectionexercises/link/{COLLECTION_EXERCISE_ID}',
         json=sample_summaries,
         auth=Config.AUTH)
     link_collex_response.raise_for_status()

@@ -12,7 +12,8 @@ querystring = {"survey_id": SURVEY_ID,
                "classifiers": f'{{"collection_exercise":"{COLLECTION_EXERCISE_ID}"}}'}
 
 if __name__ == '__main__':
-    upload_response = requests.post(f'{COLLECTION_INSTRUMENT_SERVICE_URL}collection-instrument-api/1.0.2/upload',
+    upload_response = requests.post(f'{COLLECTION_INSTRUMENT_SERVICE_URL}'
+                                    f'/collection-instrument-api/1.0.2/upload',
                                     auth=Config.AUTH,
                                     params=querystring)
     upload_response.raise_for_status()
