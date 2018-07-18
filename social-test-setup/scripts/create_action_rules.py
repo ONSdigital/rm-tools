@@ -25,13 +25,13 @@ def create_action_rules(action_plan_id: str):
     pre_not_response = requests.post(url=f'{Config.ACTION_SERVICE_URL}/actionrules',
                                      json=action_rule_pre_not,
                                      auth=Config.AUTH)
+    pprint(json.loads(pre_not_response.content))
     pre_not_response.raise_for_status()
     not_response = requests.post(url=f'{Config.ACTION_SERVICE_URL}/actionrules',
                                  json=action_rule_not,
                                  auth=Config.AUTH)
-    not_response.raise_for_status()
-    pprint(json.loads(pre_not_response.content))
     pprint(json.loads(not_response.content))
+    not_response.raise_for_status()
 
 
 if __name__ == '__main__':
