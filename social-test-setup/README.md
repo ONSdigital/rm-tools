@@ -23,31 +23,23 @@ ACTION_SERVICE_URL=http://localhost:8151
 ### Create the Survey (With Classifiers)
 Run `make create-survey`
 
+This will create the OHS Survey with `COLLECTION_EXERCISE` as the comms and instrument classifiers
 If successful a `SURVEY_ID` value should be printed, add it to the env for the next steps.
 
-CLASSIFIERS:
-TODO
-
 ### Create the Collection Exercise
-Creating the collection exercise is done through the collex-loader tool so has it's own config file.
-Set the config in `config/collection_exercise_config.json` to match the urls and auth used in your environment config,
-including the url, username and password.
+Creating the collection exercise is done through the collex-loader tool.
 
 Run `make create-collection-exercise`
 
+This will generate the config file for the collex loader and run it, then get the ID's of the resources generated.
 If successful a `COLLECTION_EXERCISE_ID` and `ACTION_PLAN_ID` value should be printed, add it to the env for the next steps.
 
 ### Add the Collection Exercise Events
-Adding collection exercise events is done through the collex-loader tool so has it's own config file.
-Set the config in `config/events_config.json`:
-* Match the urls and auth used in your environment config, including the url, username and password
-* Replace `BASE_URL` sections with the collection exercise service url
-* Replace `COLLECTION_EXERCISE_ID` with the ID from the last step
+Make sure the `COLLECTION_EXERCISE_ID` is set in the environment
 
 Run `make create-collection-events`
 
-### Set the Case Type Default
-TODO
+This will generate the config file for the collex event loader and run it, then get the ID's of the resources generated.
 
 ### Load the Social Sample File
 Set `SAMPLE_PATH` to the path to the sample file to load.

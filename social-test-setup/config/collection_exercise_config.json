@@ -1,15 +1,17 @@
 {
-    "inputFiles": ["data/OHS-collection-exercises.csv"],
-    "dryRun": false,
-    "api":{
-        "post-url": "http://localhost:8145/collectionexercises",
-        "user": "admin",
-        "password": "secret"
-    },
-    "columnMappings": {
-        "Survey_Id": "surveyRef",
-        "Survey_Name": "name",
-        "Collection_Number": "exerciseRef",
-        "Collection_Description": "userDescription"
-    }
+  "inputFiles": [
+    "data/OHS-collection-exercises.csv"
+  ],
+  "dryRun": false,
+  "api": {
+    "post-url": "http://localhost:8145/collectionexercises",
+    "user": "admin",
+    "password": "secret"
+  },
+  "columnMappings": {
+    "Survey_Id": "surveyRef",
+    "Survey_Name": "name",
+    "Collection_Number": "exerciseRef",
+    "Collection_Description": "userDescription"
+  }
 }

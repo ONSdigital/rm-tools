@@ -1,28 +1,34 @@
 create-survey:
-	pipenv run python create_survey.py
+	pipenv run python -m scripts.create_survey
 
 create-collection-exercise:
+	pipenv run python -m scripts.generate_collex_config
 	pipenv run python ././../collex-loader/load.py ./config/collection_exercise_config.json
-	pipenv run python get_collection_exercise_id.py
-	pipenv run python get_action_plan_id.py
+	pipenv run python -m scripts.get_collection_exercise_id
+	pipenv run python -m scripts.get_action_plan_id
 
 create-collection-events:
+	pipenv run python -m scripts.generate_events_config
 	pipenv run python ././../collex-loader/load_events.py ./config/events_config.json
 
 load-sample:
-	pipenv run python load_social_sample.py
+	pipenv run python -m scripts.load_social_sample
 
 link-sample:
-	pipenv run python link_sample_to_collex.py
+	pipenv run python -m scripts.link_sample_to_collex
 
 load-ci:
-	pipenv run python upload_collection_instrument.py
+	pipenv run python -m scripts.upload_collection_instrument
+	pipenv run python -m scripts.get_collection_instrument_id
 
 link-ci:
-	pipenv run python link_ci.py
+	pipenv run python -m scripts.link_ci
 
 create-action-rules:
-	pipenv run python create_action_rules.py
+	pipenv run python -m  scripts.create_action_rules
 
 execute-collection-exercise:
-	pipenv run python execute_collection_exercise.py
+	pipenv run python -m scripts.execute_collection_exercise
+
+setup-all:
+	pipenv run python -m scripts.setup_all
