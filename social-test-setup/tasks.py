@@ -31,7 +31,7 @@ def setup_and_execute(ctx):
     ctx.run('pipenv run python ././../collex-loader/load_events.py ./config/events_config.json')
 
     # Load and link sample
-    sample_summary_id = load_sample('data/test-1-sample.csv')
+    sample_summary_id = load_sample()
     link_sample(collection_exercise_id, sample_summary_id)
 
     # Load and link CI

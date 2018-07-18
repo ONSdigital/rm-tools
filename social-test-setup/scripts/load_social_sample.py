@@ -9,7 +9,8 @@ import requests
 from config.setup_config import Config
 
 
-def load_sample(sample_path: str, max_retries: int = 100) -> str:
+def load_sample(sample_path: str=None, max_retries: int = 100) -> str:
+    sample_path = sample_path or os.getenv('SAMPLE_PATH')
     with open(sample_path, 'rb') as fp:
         files = {'file': fp.read()}
     sample_upload_response = requests.post(f'{Config.SAMPLE_SERVICE_URL}'
@@ -50,4 +51,4 @@ def load_sample(sample_path: str, max_retries: int = 100) -> str:
 
 
 if __name__ == '__main__':
-    load_sample(os.getenv('SAMPLE_PATH'))
+    load_sample()
