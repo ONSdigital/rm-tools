@@ -4,8 +4,7 @@ import os
 from config.setup_config import Config
 
 
-def generate_config_file(collection_exercise_id: str):
-    # dir_path = os.path.dirname(os.path.realpath(__file__))
+def generate_events_config_file(collection_exercise_id: str):
     events_config = {
         "inputFiles": ["data/test-1-events.csv"],
         "dryRun": False,
@@ -27,4 +26,4 @@ def generate_config_file(collection_exercise_id: str):
 
 
 if __name__ == '__main__':
-    generate_config_file(os.getenv('COLLECTION_EXERCISE_ID'))
+    generate_events_config_file(os.getenv('COLLECTION_EXERCISE_ID'))

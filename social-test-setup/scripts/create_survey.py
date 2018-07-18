@@ -11,7 +11,7 @@ def create_survey() -> str:
     survey = {
         'surveyRef': '999',
         'shortName': 'OHS',
-        'longName': 'Online Household Study (alpha)',
+        'longName': 'Online Household Study (Alpha)',
         'legalBasisRef': 'Vol',
         'surveyType': 'Social'
     }

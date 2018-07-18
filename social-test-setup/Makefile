@@ -30,5 +30,5 @@ create-action-rules:
 execute-collection-exercise:
 	pipenv run python -m scripts.execute_collection_exercise
 
-setup-all:
-	pipenv run python -m scripts.setup_all
+setup-and-execute:
+	pipenv run invoke setup-and-execute

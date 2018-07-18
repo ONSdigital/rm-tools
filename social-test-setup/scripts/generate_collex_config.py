@@ -1,10 +1,9 @@
 import json
-import os
 
 from config.setup_config import Config
 
 
-def generate_config_file():
+def generate_collex_config_file():
     collex_config = {
         'inputFiles': ['data/OHS-collection-exercises.csv'],
         'dryRun': False,
@@ -27,4 +26,4 @@ def generate_config_file():
 
 
 if __name__ == '__main__':
-    generate_config_file()
+    generate_collex_config_file()
