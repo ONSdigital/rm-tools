@@ -1,12 +1,9 @@
-import os
-
 import requests
 
 from config.setup_config import Config
 
 
 def get_action_plan_id() -> str:
-    global ohs_actionplan
     response = requests.get(f'{Config.ACTION_SERVICE_URL}/actionplans',
                             auth=Config.AUTH)
     response.raise_for_status()

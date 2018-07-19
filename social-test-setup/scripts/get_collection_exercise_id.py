@@ -1,12 +1,9 @@
-import os
-
 import requests
 
 from config.setup_config import Config
 
 
 def get_collex_id() -> str:
-    global response
     response = requests.get(f'{Config.COLLECTION_EXERCISE_SERVICE_URL}'
                             f'/collectionexercises/1/survey/999',
                             auth=Config.AUTH)

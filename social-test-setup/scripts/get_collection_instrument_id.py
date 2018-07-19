@@ -6,7 +6,6 @@ from config.setup_config import Config
 
 
 def get_collection_instrument_id(collection_exercise_id: str) -> str:
-    global response
     response = requests.get(f'{Config.COLLECTION_INSTRUMENT_SERVICE_URL}'
                             f'/collection-instrument-api/1.0.2/collectioninstrument?searchString='
                             f'{{"collection_exercise":"{collection_exercise_id}"}}',
