@@ -17,10 +17,14 @@ def create_action_rules(action_plan_id: str):
         'priority': 3
     }
 
-    action_rule_not = action_rule_pre_not
-    action_rule_not['actionTypeName'] = 'SOCIALNOT'
-    action_rule_not['name'] = 'OHSSOCIALNOT +0'
-    action_rule_not['description'] = 'OHS Social Notification (+0 days)'
+    action_rule_not = {
+        'actionPlanId': action_plan_id,
+        'actionTypeName': 'SOCIALNOT',
+        'name': 'OHSSOCIALNOT +0',
+        'description': 'OHS Social Notification (+0 days)',
+        'daysOffset': 0,
+        'priority': 3
+    }
 
     pre_not_response = requests.post(url=f'{Config.ACTION_SERVICE_URL}/actionrules',
                                      json=action_rule_pre_not,
