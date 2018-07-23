@@ -9,7 +9,7 @@ import requests
 from config.setup_config import Config
 
 
-def load_sample(sample_path: str=None, max_retries: int = 100) -> str:
+def load_sample(sample_path: str = None, max_retries: int = 100) -> str:
     sample_path = sample_path or os.getenv('SAMPLE_PATH')
     with open(sample_path, 'rb') as fp:
         files = {'file': fp.read()}
@@ -25,7 +25,7 @@ def load_sample(sample_path: str=None, max_retries: int = 100) -> str:
     pprint(sample_upload_response)
     print('Sample uploaded, polling for state change to "ACTIVE"')
     sample_summary_id = sample_upload_response['id']
-    for retry in range(max_retries):
+    for _ in range(max_retries):
         sample_summary_response = requests.get(f'{Config.SAMPLE_SERVICE_URL}'
                                                f'/samples/samplesummary/{sample_summary_id}',
                                                auth=Config.AUTH)

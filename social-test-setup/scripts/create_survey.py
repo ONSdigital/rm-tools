@@ -39,13 +39,13 @@ def create_survey() -> str:
             'COLLECTION_EXERCISE'
         ]
     }
-    
+
     classifier1_response = requests.post(
         url=f'{Config.SURVEY_SERVICE_URL}'
             f'/surveys/{survey_id}/classifiers',
         json=classifier1,
         auth=Config.AUTH)
-    
+
     if classifier1_response.status_code != 409:
         classifier1_response.raise_for_status()
 
