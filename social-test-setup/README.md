@@ -2,6 +2,9 @@
 
 A collection of scripts for creating and running the Online Household Study (alpha).
 
+## Install Dependencies
+Run `make install` to install dependencies
+
 ## Configuration
 Some config variables are read from the environment or a `.env` file.
 To run locally against the rasrm-docker-dev services use this initial config.

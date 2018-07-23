@@ -1,3 +1,6 @@
+install:
+	pipenv install --dev
+
 create-survey:
 	pipenv run python -m scripts.create_survey
 
