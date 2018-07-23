@@ -3,13 +3,13 @@ create-survey:
 
 create-collection-exercise:
 	pipenv run python -m scripts.generate_collex_config
-	pipenv run python ././../collex-loader/load.py ./config/collection_exercise_config.json
+	pipenv run python ../collex-loader/load.py ./config/collection_exercise_config.json
 	pipenv run python -m scripts.get_collection_exercise_id
 	pipenv run python -m scripts.get_action_plan_id
 
 create-collection-events:
 	pipenv run python -m scripts.generate_events_config
-	pipenv run python ././../collex-loader/load_events.py ./config/events_config.json
+	pipenv run python ../collex-loader/load_events.py ./config/events_config.json
 
 load-sample:
 	pipenv run python -m scripts.load_social_sample
@@ -32,3 +32,6 @@ execute-collection-exercise:
 
 setup-and-execute:
 	pipenv run invoke setup-and-execute
+
+setup:
+	pipenv run invoke setup

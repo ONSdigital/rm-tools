@@ -17,15 +17,24 @@ COLLECTION_INSTRUMENT_SERVICE_URL=http://localhost:8002
 ACTION_SERVICE_URL=http://localhost:8151
 ```
 
-## Social Test Setup
+## Data
+Currently these scripts are hardcoded to create the survey `Online Household Study (Alpha)` with survey ref `999` and a 
+single collection exercise for this survey with ref `1`. To set the event dates for the collection exercise,
+edit the `data/test-1-events.csv` to the dates required (in `DDMMYY` format).
+
+## Running the Setup
 
 ### Setup All at Once
-To run all the setup in sequence in one command run:
+To just run all the data setup in sequence in one command run:
+```bash
+make setup
+```
+
+Or, to run all the data setup and execute the collection exercise automatically:
 ```bash
 make setup-and-execute
 ```
 
-This will set up all the data and execute the collection exercise.
 
 ### Setup One Step at a Time
 To run through the setup one step at a time, follow these steps in order:

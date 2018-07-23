@@ -15,20 +15,19 @@ from scripts.upload_collection_instrument import upload_ci
 
 
 @task
-def setup_and_execute(ctx):
-
+def setup(ctx):
     # Create survey
     survey_id = create_survey()
 
     # Create collection exercise
     generate_collex_config_file()
-    ctx.run('pipenv run python ././../collex-loader/load.py ./config/collection_exercise_config.json')
+    ctx.run('pipenv run python ../collex-loader/load.py ./config/collection_exercise_config.json')
     collection_exercise_id = get_collex_id()
     action_plan_id = get_action_plan_id()
 
     # Load events
     generate_events_config_file(collection_exercise_id)
-    ctx.run('pipenv run python ././../collex-loader/load_events.py ./config/events_config.json')
+    ctx.run('pipenv run python ../collex-loader/load_events.py ./config/events_config.json')
 
     # Load and link sample
     sample_summary_id = load_sample()
@@ -42,5 +41,12 @@ def setup_and_execute(ctx):
     # Create action plans
     create_action_rules(action_plan_id)
 
-    # Execute collection exercise
-    execute_collection_exercise(collection_exercise_id)
+    ctx['COLLECTION_EXERCISE_ID'] = collection_exercise_id
+    print('Collection exercise setup complete')
+
+    return collection_exercise_id
+
+
+@task(setup)
+def setup_and_execute(ctx):
+    execute_collection_exercise(ctx.COLLECTION_EXERCISE_ID)
