@@ -1,4 +1,4 @@
-survey_code,survey_period,mps,go_live,ref_period_start,ref_period_end,return_by,reminder,reminder2,reminder3,employment,exercise_end
+survey_code,survey_period,mps,go_live,ref_period_start,ref_period_end,return_by,reminder,reminder2,reminder3,employment_date,exercise_end
 009,1804,160418,250418,010418,300418,070518,090518,,,,300620
 009,1805,140518,240518,010518,310518,070618,120618,,,,310720
 009,1806,190618,250618,010618,300618,070718,100718,,,150618,310820
