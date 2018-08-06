@@ -13,7 +13,7 @@ def create_action_rules(action_plan_id: str):
         'actionTypeName': 'SOCIALPRENOT',
         'name': 'OHSSOCIALPRENOT+0',
         'description': 'OHS Social Pre-notification (+0 days)',
-        'daysOffset': 0,
+        'triggerDateTime': '2018-08-06T10:27:16.997Z',
         'priority': 3
     }
 
@@ -22,7 +22,7 @@ def create_action_rules(action_plan_id: str):
         'actionTypeName': 'SOCIALNOT',
         'name': 'OHSSOCIALNOT +0',
         'description': 'OHS Social Notification (+0 days)',
-        'daysOffset': 0,
+        'triggerDateTime': '2018-08-06T10:27:16.997Z',
         'priority': 3
     }
 
