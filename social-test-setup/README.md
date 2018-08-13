@@ -25,6 +25,8 @@ Currently these scripts are hardcoded to create the survey `Online Household Stu
 single collection exercise for this survey with ref `1`. To set the event dates for the collection exercise,
 edit the `data/test-1-events.csv` to the dates required (in `DDMMYY` format).
 
+Set `SAMPLE_PATH` to the absolute file path to your social sample file.
+
 ## Running the Setup
 
 ### Setup All at Once
