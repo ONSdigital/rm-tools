@@ -16,7 +16,6 @@ def parse_args():
 
 
 def post_collex(data, url, user, password):
-    data = clean_row(data)
     response = requests.post(url, json=data, auth=(user, password), verify=False)
 
     status_code = response.status_code
@@ -26,20 +25,12 @@ def post_collex(data, url, user, password):
 
 
 def dump_collex(data):
-    data = clean_row(data)
     survey_id = data['surveyRef']
     period = data['exerciseRef']
     if survey_id and period:
         filename = "%s-%s.json" % (survey_id, period)
         with open(filename, 'w') as fo:
             json.dump(data, fo)
-
-
-def clean_row(row):
-    row['name'] = row['name'][:20]
-
-    return row
-        
 
 if __name__ == '__main__':
     args = parse_args()
