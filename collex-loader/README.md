@@ -34,7 +34,6 @@ There is [an example of the configuration file](config/collex-config.json), repe
     },
     "columnMappings": {
         "Survey_Id": "surveyRef",
-        "Survey_Name": "name",
         "Collection_Period": "exerciseRef",
         "Collection_Period_Label": "userDescription"
     }
