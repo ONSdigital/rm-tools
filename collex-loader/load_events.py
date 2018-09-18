@@ -47,11 +47,7 @@ def reformat_date(date):
         raise
 
     time_str = raw.isoformat(timespec='milliseconds')
-    # WATCH OUT: this removes the last : from a valid ISO8601 date string to form another
-    # valid ISO8601 date string that can be easily deserialised by Jackson in the Java service
-    clean_str = re.sub(r'(.*):', '\\1', time_str)
-
-    return clean_str
+    return time_str
 
 
 def get_post_data(event_tag, date_str):
