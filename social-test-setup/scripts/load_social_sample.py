@@ -9,7 +9,7 @@ import requests
 from config.setup_config import Config
 
 
-def load_sample(sample_path: str = None, max_retries: int = 100) -> str:
+def load_sample(sample_path: str = None, max_retries: int = 1000000) -> str:
     sample_path = sample_path or os.getenv('SAMPLE_PATH')
     with open(sample_path, 'rb') as fp:
         files = {'file': fp.read()}
