@@ -9,7 +9,7 @@ def upload_ci(survey_id: str, collection_exercise_id: str):
     querystring = {'survey_id': survey_id,
                    'classifiers': f'{{"collection_exercise":"{collection_exercise_id}",'
                                   f'"eq_id":"lms",'
-                                  f'"form_type":"1"}}'}
+                                  f'"form_type":"2"}}'}
 
     upload_response = requests.post(f'{Config.COLLECTION_INSTRUMENT_SERVICE_URL}'
                                     f'/collection-instrument-api/1.0.2/upload',
